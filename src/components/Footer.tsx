@@ -7,10 +7,15 @@ export default function Footer() {
       <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 sm:grid-cols-2 lg:grid-cols-3">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3">
-            <span aria-hidden className="block h-6 w-px bg-bronze" />
-            <span className="font-display text-sm font-bold uppercase tracking-[0.22em] text-creme">
-              Grey Stone Capital
-            </span>
+            <span aria-hidden className="block h-9 w-px bg-bronze" />
+            <div className="flex flex-col gap-0.5">
+              <span className="font-display text-sm font-bold uppercase tracking-[0.22em] text-creme">
+                Grey Stone Capital
+              </span>
+              <span className="font-mono text-[0.55rem] uppercase tracking-[0.18em] text-bronze">
+                Holding d&rsquo;innovation immobilière
+              </span>
+            </div>
           </div>
           <p className="max-w-xs text-sm leading-relaxed text-gris">
             Le groupe Grey Stone Capital réunit et développe des sociétés

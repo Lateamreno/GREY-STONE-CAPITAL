@@ -16,10 +16,15 @@ export default function Header() {
         <Link href="/" onClick={close} className="group flex items-center gap-3">
           <span
             aria-hidden
-            className="block h-8 w-px bg-bronze transition-colors group-hover:bg-bronze-clair"
+            className="block h-9 w-px bg-bronze transition-colors group-hover:bg-bronze-clair"
           />
-          <span className="font-display text-sm font-bold uppercase tracking-[0.22em] text-creme">
-            Grey Stone Capital
+          <span className="flex flex-col gap-0.5">
+            <span className="font-display text-sm font-bold uppercase tracking-[0.22em] text-creme">
+              Grey Stone Capital
+            </span>
+            <span className="font-mono text-[0.55rem] uppercase tracking-[0.18em] text-bronze">
+              Holding d&rsquo;innovation immobilière
+            </span>
           </span>
         </Link>
 
