@@ -1,97 +1,71 @@
-import { companies } from "@/config/companies";
+import { companyById } from "@/config/companies";
 import { CompanyGlyph } from "@/components/icons";
 
 /**
- * Schéma du système de groupe : les trois sociétés en cycle,
- * la holding au centre (vision de groupe, synergies).
+ * Schéma du système de groupe — constellation : la holding au centre
+ * (vision de groupe, synergies), les quatre sociétés autour. Rayons pleins
+ * vers le centre, anneau pointillé entre sociétés : chacune peut servir
+ * chacune, la holding organise.
  */
 export default function CycleDiagram() {
-  const [a, b, c] = companies;
+  const top = companyById("france-immeuble");
+  const right = companyById("team-reno");
+  const bottom = companyById("fi-division");
+  const left = companyById("pleinbail");
+  if (!top || !right || !bottom || !left) return null;
+
+  const nodes = [
+    { company: top, position: "left-1/2 top-0 -translate-x-1/2 -translate-y-1/3" },
+    { company: right, position: "right-0 top-1/2 -translate-y-1/2 translate-x-1/6 sm:translate-x-1/4" },
+    { company: bottom, position: "left-1/2 bottom-0 -translate-x-1/2 translate-y-1/3" },
+    { company: left, position: "left-0 top-1/2 -translate-y-1/2 -translate-x-1/6 sm:-translate-x-1/4" },
+  ];
 
   return (
-    <div className="relative mx-auto w-full max-w-md">
+    <div className="relative mx-auto w-full max-w-md py-10">
       <svg viewBox="0 0 400 400" className="w-full" aria-hidden>
-        {/* Orbite */}
+        {/* Anneau des synergies — pointillé, sans sens unique */}
         <circle
           cx="200"
           cy="200"
           r="140"
           fill="none"
-          stroke="#282522"
+          stroke="#C19B6E"
           strokeWidth="1"
+          strokeDasharray="4 7"
+          opacity="0.55"
         />
-        {/* Flèches de cycle (sens horaire) */}
-        <defs>
-          <marker
-            id="arrow"
-            viewBox="0 0 10 10"
-            refX="8"
-            refY="5"
-            markerWidth="7"
-            markerHeight="7"
-            orient="auto-start-reverse"
-          >
-            <path d="M0 0 L10 5 L0 10 z" fill="#C19B6E" />
-          </marker>
-        </defs>
-        <path
-          d="M 310 130 A 140 140 0 0 1 310 270"
-          fill="none"
-          stroke="#C19B6E"
-          strokeWidth="1.5"
-          markerEnd="url(#arrow)"
-          opacity="0.8"
-        />
-        <path
-          d="M 265 315 A 140 140 0 0 1 135 315"
-          fill="none"
-          stroke="#C19B6E"
-          strokeWidth="1.5"
-          markerEnd="url(#arrow)"
-          opacity="0.8"
-        />
-        <path
-          d="M 90 270 A 140 140 0 0 1 90 130"
-          fill="none"
-          stroke="#C19B6E"
-          strokeWidth="1.5"
-          markerEnd="url(#arrow)"
-          opacity="0.8"
-        />
-        {/* Liens vers le centre */}
-        <line x1="200" y1="118" x2="200" y2="60" stroke="#282522" strokeDasharray="3 4" />
-        <line x1="146" y1="252" x2="79" y2="308" stroke="#282522" strokeDasharray="3 4" />
-        <line x1="254" y1="252" x2="321" y2="308" stroke="#282522" strokeDasharray="3 4" />
+        {/* Rayons pleins : chaque société reliée au centre */}
+        <line x1="200" y1="140" x2="200" y2="60" stroke="#C19B6E" strokeWidth="1" opacity="0.8" />
+        <line x1="260" y1="200" x2="340" y2="200" stroke="#C19B6E" strokeWidth="1" opacity="0.8" />
+        <line x1="200" y1="260" x2="200" y2="340" stroke="#C19B6E" strokeWidth="1" opacity="0.8" />
+        <line x1="140" y1="200" x2="60" y2="200" stroke="#C19B6E" strokeWidth="1" opacity="0.8" />
         {/* Centre */}
-        <circle cx="200" cy="200" r="62" fill="#121110" stroke="#C19B6E" strokeWidth="1" />
+        <circle cx="200" cy="200" r="60" fill="#121110" stroke="#C19B6E" strokeWidth="1" />
       </svg>
 
       {/* Centre — holding */}
       <div className="absolute left-1/2 top-1/2 flex w-32 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center">
-        <span aria-hidden className="mb-2 block h-5 w-px bg-bronze" />
-        <p className="font-display text-[0.68rem] font-bold uppercase leading-tight tracking-[0.18em] text-creme">
+        <span aria-hidden className="mb-2 block h-4 w-px bg-bronze" />
+        <p className="font-display text-[0.65rem] font-bold uppercase leading-tight tracking-[0.18em] text-creme">
           Grey Stone Capital
         </p>
-        <p className="mt-1 font-mono text-[0.55rem] uppercase tracking-[0.14em] text-gris">
+        <p className="mt-1 font-mono text-[0.52rem] uppercase tracking-[0.14em] text-gris">
           Vision de groupe · synergies
         </p>
       </div>
 
       {/* Nœuds sociétés */}
-      {[
-        { company: a, position: "left-1/2 top-0 -translate-x-1/2 -translate-y-1/3" },
-        { company: b, position: "bottom-0 right-0 translate-y-1/4 sm:translate-x-1/4" },
-        { company: c, position: "bottom-0 left-0 translate-y-1/4 sm:-translate-x-1/4" },
-      ].map(({ company, position }) => (
+      {nodes.map(({ company, position }) => (
         <div
           key={company.id}
-          className={`absolute ${position} flex flex-col items-center gap-1 border border-ligne bg-noir-2 px-4 py-3 text-center shadow-[0_10px_30px_rgba(0,0,0,0.5)]`}
+          className={`absolute ${position} flex w-32 flex-col items-center gap-1 border border-ligne bg-noir-2 px-3 py-3 text-center shadow-[0_10px_30px_rgba(0,0,0,0.5)] sm:w-36`}
         >
           <CompanyGlyph icon={company.icon} className="h-5 w-5 text-bronze" />
-          <p className="font-display text-xs font-bold text-creme">
+          <p className="font-display text-[0.7rem] font-bold leading-tight text-creme">
             {company.name}
           </p>
-          <p className="font-mono text-[0.55rem] uppercase tracking-[0.16em] text-bronze">
+          <p className="font-mono text-[0.52rem] uppercase tracking-[0.16em] text-bronze">
             {company.cycleRole}
           </p>
         </div>

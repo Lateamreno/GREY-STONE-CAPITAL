@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  companies,
-  companyBySlug,
-  franceImmeubleDivision,
-} from "@/config/companies";
+import { companies, companyBySlug } from "@/config/companies";
 import { ficheByCompanyId, societes } from "@/content/societes";
 import PillLink from "@/components/PillLink";
 import FacadeMotif from "@/components/FacadeMotif";
@@ -66,16 +62,18 @@ export default async function SocietePage({
               {company.baseline}
             </p>
             <p className="mt-4 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-gris">
-              Grey Stone Capital — {company.relation}
+              {company.relationLabel}
             </p>
             <p className="mt-6 max-w-2xl leading-relaxed text-gris">
               {company.longDescription}
             </p>
-            <div className="mt-10">
-              <PillLink href={company.url} external>
-                {societes.labels.visit} <IconArrowUpRight className="h-4 w-4" />
-              </PillLink>
-            </div>
+            {company.url && (
+              <div className="mt-10">
+                <PillLink href={company.url} external>
+                  {societes.labels.visit} <IconArrowUpRight className="h-4 w-4" />
+                </PillLink>
+              </div>
+            )}
           </div>
           <div className="hidden justify-end lg:flex">
             <FacadeMotif className="w-56 opacity-80" />
@@ -83,52 +81,86 @@ export default async function SocietePage({
         </div>
       </section>
 
-      {/* Marché / Réponse */}
+      {/* Le marché */}
       <section className="border-b border-ligne">
-        <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 sm:py-24 lg:grid-cols-2 lg:gap-16">
+        <div className="mx-auto grid max-w-6xl gap-12 px-6 py-20 sm:py-24 lg:grid-cols-[5fr_7fr]">
           <div>
-            <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-bronze">
+            <p className="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
               {societes.labels.marche}
             </p>
-            <p className="leading-relaxed text-gris">{fiche.marche}</p>
+            <h2 className="font-display text-2xl font-bold leading-tight text-creme sm:text-3xl">
+              {fiche.marcheTitle}
+            </h2>
           </div>
-          <div>
-            <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-bronze">
-              {societes.labels.reponse}
-            </p>
-            <p className="leading-relaxed text-gris">{fiche.reponse}</p>
+          <div className="flex flex-col gap-6 lg:pt-10">
+            {fiche.marche.map((paragraph) => (
+              <p key={paragraph} className="leading-relaxed text-gris">
+                {paragraph}
+              </p>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Sous-bloc découpe — uniquement France Immeuble */}
-      {company.id === "france-immeuble" && (
-        <section className="border-b border-ligne">
-          <div className="mx-auto max-w-6xl px-6 py-16">
-            <div className="border-l-2 border-bronze bg-noir-2 px-6 py-8 sm:px-8">
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-bronze">
-                {societes.division.kicker}
-              </p>
-              <p className="mt-3 font-display text-lg font-bold text-creme">
-                {franceImmeubleDivision.name}
-              </p>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-gris">
-                {societes.division.text}
-              </p>
-            </div>
+      {/* La réponse */}
+      <section className="border-b border-ligne bg-noir-2">
+        <div className="mx-auto grid max-w-6xl gap-12 px-6 py-20 sm:py-24 lg:grid-cols-[5fr_7fr]">
+          <div>
+            <p className="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
+              {societes.labels.reponse}
+            </p>
+            <h2 className="font-display text-2xl font-bold leading-tight text-creme sm:text-3xl">
+              {fiche.reponseTitle}
+            </h2>
           </div>
-        </section>
-      )}
+          <div className="flex flex-col gap-6 lg:pt-10">
+            {fiche.reponse.map((paragraph) => (
+              <p key={paragraph} className="leading-relaxed text-gris">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Savoir-faire */}
+      <section className="border-b border-ligne">
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+          <p className="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
+            {societes.labels.savoirFaire}
+          </p>
+          <div className="mt-10 grid border-t border-ligne sm:grid-cols-3 sm:border-l">
+            {fiche.savoirFaire.map((item) => (
+              <div
+                key={item.title}
+                className="flex flex-col gap-4 border-b border-ligne py-10 sm:border-b-0 sm:border-r sm:px-8 sm:py-12"
+              >
+                <p className="font-mono text-xs uppercase tracking-[0.25em] text-bronze">
+                  {item.title}
+                </p>
+                <p className="text-sm leading-relaxed text-gris">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Place dans le système */}
       <section className="border-b border-ligne bg-noir-2">
         <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
-          <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-bronze">
+          <p className="mb-6 font-mono text-xs uppercase tracking-[0.2em] text-bronze">
             {societes.labels.synergie}
           </p>
           <p className="max-w-3xl font-display text-xl font-bold leading-relaxed text-creme sm:text-2xl">
             {fiche.synergie}
           </p>
+          {company.url && (
+            <div className="mt-10">
+              <PillLink href={company.url} external>
+                {societes.labels.visit} <IconArrowUpRight className="h-4 w-4" />
+              </PillLink>
+            </div>
+          )}
         </div>
       </section>
 

@@ -53,14 +53,14 @@ export default function HomePage() {
 
       {/* Bande sociétés */}
       <section className="border-b border-ligne bg-noir-2">
-        <div className="mx-auto grid max-w-6xl sm:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl sm:grid-cols-2 lg:grid-cols-4">
           {companies.map((company, index) => (
             <Link
               key={company.id}
               href={`/societes/${company.slug}`}
               className={`group flex items-start gap-4 px-6 py-8 transition-colors hover:bg-noir-3 ${
-                index > 0 ? "border-t border-ligne sm:border-l sm:border-t-0" : ""
-              }`}
+                index > 0 ? "border-t border-ligne" : ""
+              } sm:[&:nth-child(-n+2)]:border-t-0 sm:even:border-l sm:[&:nth-child(n+3)]:border-t lg:border-t-0 lg:border-l lg:first:border-l-0`}
             >
               <CompanyGlyph
                 icon={company.icon}
@@ -171,11 +171,11 @@ export default function HomePage() {
             {home.societesSection.title}
           </h2>
 
-          <div className="mt-16 grid border-t border-ligne lg:grid-cols-3 lg:border-l">
+          <div className="mt-16 grid border-t border-ligne sm:grid-cols-2">
             {companies.map((company) => (
               <article
                 key={company.id}
-                className="group flex flex-col gap-4 border-b border-ligne py-10 lg:border-b-0 lg:border-r lg:px-8 lg:py-12"
+                className="group flex flex-col gap-4 border-b border-ligne py-10 sm:px-8 sm:py-12 sm:odd:border-r"
               >
                 <CompanyGlyph icon={company.icon} className="h-7 w-7 text-bronze" />
                 <p className="font-mono text-xs uppercase tracking-[0.2em] text-bronze">
@@ -197,14 +197,16 @@ export default function HomePage() {
                   >
                     En savoir plus
                   </Link>
-                  <a
-                    href={company.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-full border border-bronze px-4 py-1.5 text-xs font-medium text-bronze transition-colors hover:bg-bronze hover:text-noir"
-                  >
-                    Site <IconArrowUpRight className="h-3.5 w-3.5" />
-                  </a>
+                  {company.url && (
+                    <a
+                      href={company.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-bronze px-4 py-1.5 text-xs font-medium text-bronze transition-colors hover:bg-bronze hover:text-noir"
+                    >
+                      Site <IconArrowUpRight className="h-3.5 w-3.5" />
+                    </a>
+                  )}
                 </div>
               </article>
             ))}

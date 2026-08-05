@@ -31,12 +31,6 @@ export default function Header() {
           >
             Le groupe
           </Link>
-          <Link
-            href="/#systeme"
-            className="text-sm text-gris transition-colors hover:text-creme"
-          >
-            Le système
-          </Link>
 
           <div className="group relative">
             <Link
@@ -99,13 +93,6 @@ export default function Header() {
             className="block border-b border-ligne px-6 py-5 font-display text-lg font-bold text-creme"
           >
             Le groupe
-          </Link>
-          <Link
-            href="/#systeme"
-            onClick={close}
-            className="block border-b border-ligne px-6 py-5 font-display text-lg font-bold text-creme"
-          >
-            Le système
           </Link>
           <Link
             href="/societes"

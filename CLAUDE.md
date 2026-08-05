@@ -72,11 +72,13 @@ Histoire à raconter :
 1. Le groupe identifie des angles morts du marché immobilier
    d'investissement.
 2. France Immeuble répond aux vendeurs d'immeubles de rapport, longtemps
-   sans acteur dédié (transaction off-market spécialisée). Sa fiche inclut
-   un SOUS-BLOC dédié : « France Immeuble Division » (nom provisoire,
-   configurable dans `companies.ts`) — service de vente à la découpe :
-   mise en copropriété et commercialisation lot par lot, présenté comme
-   l'alternative chiffrée à la vente en bloc.
+   sans acteur dédié (transaction off-market spécialisée). « France
+   Immeuble Division » (nom provisoire, configurable dans `companies.ts`)
+   est présentée comme une SOCIÉTÉ À PART ENTIÈRE (décision propriétaire) :
+   vente à la découpe — mise en copropriété et commercialisation lot par
+   lot, l'alternative chiffrée à la vente en bloc. Relation affichée :
+   « division de France Immeuble ». Pas de lien externe tant qu'elle n'a
+   pas de site propre.
 3. Autour de cette base, le groupe crée des sociétés répondant aux besoins
    des détenteurs d'actifs : la filiale travaux (réhabilitation
    d'immeubles, nom provisoire La Team Reno) née pour servir les clients
@@ -111,14 +113,19 @@ Une seule couleur d'accent. Relief par dégradés monochromes + ombres.
 - Registre visuel : société d'investissement, pas agence web. Beaucoup
   d'espace, peu d'effets.
 
-## Arborescence (4 pages)
+## Arborescence (mise à jour — décisions propriétaire en cours de projet)
 
 | Route | Page | Contenu |
 |---|---|---|
-| `/` | Accueil | Hero (holding + thèse en une phrase) · bande sociétés (3 logos/noms) · manifeste court · 3 fiches sociétés en aperçu · CTA vers /participations et /contact |
-| `/groupe` | Le groupe | Histoire, vision, thèse d'investissement (3-4 paragraphes denses), manière d'opérer (le groupe crée, structure, digitalise) |
-| `/participations` | Participations | Une fiche par société : France Immeuble (participation historique), filiale travaux (nom provisoire), PleinBail (création). Chaque fiche : rôle, problème de marché résolu, lien vers le site |
-| `/contact` | Contact | Contact corporate uniquement (partenariats, presse, opportunités). Formulaire Formspree : nom, société, email, objet (liste : Partenariat / Presse / Opportunité d'investissement / Autre), message |
+| `/` | Page unique du groupe | Hero (holding + thèse) · bande sociétés · section Le groupe (ancre `#groupe` : manifeste + histoire) · section Le système (ancre `#systeme` : thèse, schéma des synergies) · manière d'opérer · aperçu sociétés · CTA vers /societes |
+| `/societes` | Sociétés | Une carte par société (étiquette métier, pas le statut juridique) ; menu déroulant « Sociétés » dans le header, burger sur mobile |
+| `/societes/[slug]` | Page société | Page longue : hero (métier + relation exacte en mention discrète), marché, réponse, savoir-faire (3 volets), place dans le système, lien site (si existant), navigation entre sociétés |
+
+PAS de page contact (décision propriétaire) ni de formulaire. Le nav ne
+contient que « Le groupe » et « Sociétés ». Étiquettes métier :
+Spécialiste immeuble / Vente à la découpe / Spécialiste travaux /
+Marketplace d'investissement. Schéma du système : holding au centre,
+quatre sociétés autour (Conseiller / Découper / Valoriser / Diffuser).
 
 ## Stack technique
 
@@ -161,8 +168,9 @@ preview Vercel.
   immeubles », pas de volumes, pas de CA) : sobriété totale, la
   crédibilité passe par le verbe et la précision, jamais par les nombres
 - Pas de mention de sociétés/projets non validés (pas de Hopelia, pas de
-  conciergerie, pas de menuiseries). La découpe apparaît UNIQUEMENT en
-  sous-bloc de la fiche France Immeuble, pas en fiche séparée
+  conciergerie, pas de menuiseries). La découpe (France Immeuble Division)
+  est une fiche société à part entière (décision propriétaire, à terme
+  société distincte), sans lien externe tant qu'elle n'a pas de site
 - Pas de `next/font/google`, pas de deuxième couleur d'accent
 - Pas de photos de personnes (le dirigeant reste en retrait), pas de page
   équipe

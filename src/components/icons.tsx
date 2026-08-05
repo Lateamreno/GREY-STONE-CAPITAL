@@ -22,6 +22,16 @@ export function IconBuilding(props: IconProps) {
   );
 }
 
+/** Immeuble découpé en lots — vente à la découpe */
+export function IconLots(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="4" y="4" width="16" height="16" />
+      <path d="M12 4v16M4 12h16" />
+    </svg>
+  );
+}
+
 /** Rouleau — travaux */
 export function IconRoller(props: IconProps) {
   return (
@@ -94,6 +104,7 @@ export function CompanyGlyph({
   ...props
 }: IconProps & { icon: CompanyIcon }) {
   if (icon === "building") return <IconBuilding {...props} />;
+  if (icon === "lots") return <IconLots {...props} />;
   if (icon === "roller") return <IconRoller {...props} />;
   return <IconPlatform {...props} />;
 }

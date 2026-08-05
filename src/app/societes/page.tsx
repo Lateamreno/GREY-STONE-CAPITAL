@@ -39,13 +39,13 @@ export default function SocietesPage() {
 
       {/* Cartes sociétés */}
       <section className="border-b border-ligne">
-        <div className="mx-auto grid max-w-6xl lg:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl sm:grid-cols-2">
           {companies.map((company, index) => (
             <article
               key={company.id}
               className={`group relative flex flex-col gap-4 px-6 py-14 transition-colors hover:bg-noir-2 lg:px-10 ${
-                index > 0 ? "border-t border-ligne lg:border-l lg:border-t-0" : ""
-              }`}
+                index > 0 ? "border-t border-ligne" : ""
+              } sm:[&:nth-child(-n+2)]:border-t-0 sm:even:border-l sm:[&:nth-child(n+3)]:border-t`}
             >
               <CompanyGlyph icon={company.icon} className="h-8 w-8 text-bronze" />
               <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-bronze">
@@ -69,14 +69,16 @@ export default function SocietesPage() {
                   {/* étend la zone cliquable à toute la carte */}
                   <span className="absolute inset-0" aria-hidden />
                 </Link>
-                <a
-                  href={company.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative z-10 inline-flex items-center gap-1.5 rounded-full border border-bronze px-4 py-1.5 text-xs font-medium text-bronze transition-colors hover:bg-bronze hover:text-noir"
-                >
-                  Site <IconArrowUpRight className="h-3.5 w-3.5" />
-                </a>
+                {company.url && (
+                  <a
+                    href={company.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative z-10 inline-flex items-center gap-1.5 rounded-full border border-bronze px-4 py-1.5 text-xs font-medium text-bronze transition-colors hover:bg-bronze hover:text-noir"
+                  >
+                    Site <IconArrowUpRight className="h-3.5 w-3.5" />
+                  </a>
+                )}
               </div>
             </article>
           ))}
