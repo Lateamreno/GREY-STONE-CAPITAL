@@ -47,10 +47,10 @@ const TWINKLES = [
 
 export default function CycleDiagram() {
   const nodes = [
-    { company: companyById("france-immeuble"), position: "left-[27.5%] top-[27.5%]" },
-    { company: companyById("team-reno"), position: "left-[72.5%] top-[27.5%]" },
-    { company: companyById("pleinbail"), position: "left-[27.5%] top-[72.5%]" },
-    { company: companyById("fi-division"), position: "left-[72.5%] top-[72.5%]" },
+    { company: companyById("france-immeuble"), position: "left-[26%] top-[26%]" },
+    { company: companyById("team-reno"), position: "left-[74%] top-[26%]" },
+    { company: companyById("pleinbail"), position: "left-[26%] top-[74%]" },
+    { company: companyById("fi-division"), position: "left-[74%] top-[74%]" },
   ].filter((node) => node.company !== undefined);
 
   return (
@@ -152,22 +152,22 @@ export default function CycleDiagram() {
         ))}
 
         {/* Halo et noyau */}
-        <circle cx="240" cy="240" r="130" fill="url(#gsc-glow)" />
+        <circle cx="240" cy="240" r="120" fill="url(#gsc-glow)" />
         <circle
           cx="240"
           cy="240"
-          r="84"
+          r="78"
           fill="none"
           stroke="#C19B6E"
           strokeWidth="5"
           opacity="0.4"
           filter="url(#gsc-blur)"
         />
-        <circle cx="240" cy="240" r="82" fill="#121110" />
+        <circle cx="240" cy="240" r="76" fill="#121110" />
         <circle
           cx="240"
           cy="240"
-          r="84"
+          r="78"
           fill="none"
           stroke="#E6D4BD"
           strokeWidth="1.1"
@@ -177,7 +177,7 @@ export default function CycleDiagram() {
           <circle
             cx="240"
             cy="240"
-            r="94"
+            r="88"
             fill="none"
             stroke="#C19B6E"
             strokeWidth="0.8"
@@ -188,15 +188,12 @@ export default function CycleDiagram() {
       </svg>
 
       {/* Noyau — holding */}
-      <div className="absolute left-1/2 top-1/2 flex w-40 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center">
-        <p className="font-display text-xl font-extrabold tracking-[0.14em] text-bronze">
-          GS
-        </p>
-        <p className="mt-2 font-display text-[0.7rem] font-bold uppercase leading-tight tracking-[0.2em] text-creme">
+      <div className="absolute left-1/2 top-1/2 flex w-24 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center sm:w-36">
+        <p className="font-display text-[0.55rem] font-bold uppercase leading-snug tracking-[0.18em] text-creme sm:text-[0.7rem]">
           Grey Stone Capital
         </p>
-        <span aria-hidden className="my-2 block h-px w-8 bg-bronze/60" />
-        <p className="font-mono text-[0.52rem] uppercase tracking-[0.16em] text-gris">
+        <span aria-hidden className="my-1.5 block h-px w-7 bg-bronze/60 sm:my-2 sm:w-8" />
+        <p className="font-mono text-[0.45rem] uppercase leading-relaxed tracking-[0.15em] text-gris sm:text-[0.52rem]">
           Vision de groupe · synergies
         </p>
       </div>
@@ -207,7 +204,7 @@ export default function CycleDiagram() {
           <Link
             key={company!.id}
             href={`/societes/${company!.slug}`}
-            className={`group pointer-events-auto absolute ${position} h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border border-bronze/50 bg-noir/95 shadow-[0_0_35px_rgba(193,155,110,0.16),0_18px_45px_rgba(0,0,0,0.6)] transition-[border-color,box-shadow] duration-300 hover:border-bronze-clair hover:shadow-[0_0_50px_rgba(193,155,110,0.3),0_18px_45px_rgba(0,0,0,0.6)] sm:h-36 sm:w-36`}
+            className={`group pointer-events-auto absolute ${position} h-20 w-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-bronze/50 bg-noir/95 shadow-[0_0_35px_rgba(193,155,110,0.16),0_18px_45px_rgba(0,0,0,0.6)] transition-[border-color,box-shadow] duration-300 hover:border-bronze-clair hover:shadow-[0_0_50px_rgba(193,155,110,0.3),0_18px_45px_rgba(0,0,0,0.6)] sm:h-32 sm:w-32`}
           >
             <span className="gsc-orbit-rev flex h-full w-full flex-col items-center justify-center gap-0.5 rounded-full px-2 text-center sm:gap-1 sm:px-3">
               <CompanyGlyph
