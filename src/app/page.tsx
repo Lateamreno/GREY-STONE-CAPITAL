@@ -1,8 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { companies } from "@/config/companies";
 import { home } from "@/content/home";
 import PillLink from "@/components/PillLink";
-import FacadeMotif from "@/components/FacadeMotif";
 import CycleDiagram from "@/components/CycleDiagram";
 import {
   CompanyGlyph,
@@ -23,30 +23,42 @@ export default function HomePage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-ligne">
+        {/* Photo d'immeubles haussmanniens, traitement sombre charte */}
+        <Image
+          src="/images/hero-immeubles.jpg"
+          alt="Toits et façades d'immeubles haussmanniens à Paris"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[65%_35%] opacity-50 brightness-[0.55] saturate-[0.65] sepia-[0.25]"
+        />
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 80% 60% at 30% 0%, rgba(193,155,110,0.08), transparent 60%)",
+              "linear-gradient(to right, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.75) 45%, rgba(10,10,10,0.35) 100%)",
           }}
         />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 pb-20 pt-24 sm:pb-28 sm:pt-32 lg:grid-cols-[7fr_4fr]">
-          <div>
-            <p className="mb-8 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
-              {home.hero.kicker}
-            </p>
-            <h1 className="max-w-3xl font-display text-4xl font-bold leading-[1.08] tracking-tight text-creme sm:text-5xl lg:text-6xl">
-              {home.hero.title}{" "}
-              <span className="text-bronze">{home.hero.titleAccent}</span>
-            </h1>
-            <div className="mt-12 flex flex-wrap gap-4">
-              <PillLink href="/societes">Les sociétés</PillLink>
-              <PillLink href="/#groupe">Le groupe</PillLink>
-            </div>
-          </div>
-          <div className="hidden justify-end lg:flex">
-            <FacadeMotif className="w-64 opacity-90" />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(10,10,10,0.4) 0%, transparent 30%, transparent 60%, rgba(10,10,10,0.9) 100%), radial-gradient(ellipse 80% 60% at 30% 0%, rgba(193,155,110,0.08), transparent 60%)",
+          }}
+        />
+        <div className="relative mx-auto max-w-6xl px-6 pb-24 pt-24 sm:pb-32 sm:pt-36">
+          <p className="mb-8 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
+            {home.hero.kicker}
+          </p>
+          <h1 className="max-w-3xl font-display text-4xl font-bold leading-[1.08] tracking-tight text-creme sm:text-5xl lg:text-6xl">
+            {home.hero.title}{" "}
+            <span className="text-bronze">{home.hero.titleAccent}</span>
+          </h1>
+          <div className="mt-12 flex flex-wrap gap-4">
+            <PillLink href="/societes">Les sociétés</PillLink>
+            <PillLink href="/#groupe">Le groupe</PillLink>
           </div>
         </div>
       </section>
@@ -141,7 +153,26 @@ export default function HomePage() {
             {home.operer.title}
           </h2>
 
-          <div className="mt-16 grid border-t border-ligne sm:grid-cols-3 sm:border-l">
+          {/* L'humain du groupe — équipe au travail, traitement sombre */}
+          <div className="relative mt-16 h-64 overflow-hidden border border-ligne sm:h-96">
+            <Image
+              src="/images/equipe-travail.jpg"
+              alt="Équipe au travail autour d'une table, sur ordinateurs"
+              fill
+              sizes="(min-width: 1152px) 1104px, 100vw"
+              className="object-cover object-center brightness-[0.65] saturate-[0.75] sepia-[0.15]"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 45%), linear-gradient(to bottom, rgba(10,10,10,0.35) 0%, transparent 30%)",
+              }}
+            />
+          </div>
+
+          <div className="mt-4 grid border-t border-ligne sm:grid-cols-3 sm:border-l">
             {home.operer.items.map((item) => {
               const Icon = opererIcons[item.icon as keyof typeof opererIcons];
               return (

@@ -172,6 +172,8 @@ preview Vercel.
   est une fiche société à part entière (décision propriétaire, à terme
   société distincte), sans lien externe tant qu'elle n'a pas de site
 - Pas de `next/font/google`, pas de deuxième couleur d'accent
-- Pas de photos de personnes (le dirigeant reste en retrait), pas de page
-  équipe
+- Pas de photos du dirigeant ni d'équipe identifiable (il reste en
+  retrait), pas de page équipe. Visuels génériques de personnes (banque
+  d'images, personnes non identifiables au groupe) autorisés — décision
+  propriétaire
 - Pas de jaune #FFC000
