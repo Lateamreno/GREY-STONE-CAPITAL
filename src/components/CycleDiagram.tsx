@@ -236,7 +236,9 @@ export default function CycleDiagram() {
         </p>
         <span aria-hidden className="my-1.5 block h-px w-7 bg-bronze/60 sm:my-2 sm:w-8" />
         <p className="font-mono text-[0.45rem] uppercase leading-relaxed tracking-[0.15em] text-gris sm:text-[0.52rem]">
-          Vision de groupe · synergies
+          Vision de groupe
+          <br />
+          Synergies
         </p>
       </div>
 
@@ -246,17 +248,17 @@ export default function CycleDiagram() {
           <Link
             key={company!.id}
             href={`/societes/${company!.slug}`}
-            className={`group pointer-events-auto absolute ${position} h-20 w-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-bronze/50 bg-noir/95 shadow-[0_0_35px_rgba(193,155,110,0.16),0_18px_45px_rgba(0,0,0,0.6)] transition-[border-color,box-shadow] duration-300 hover:border-bronze-clair hover:shadow-[0_0_50px_rgba(193,155,110,0.3),0_18px_45px_rgba(0,0,0,0.6)] sm:h-32 sm:w-32`}
+            className={`group pointer-events-auto absolute ${position} h-[5.5rem] w-[5.5rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-bronze/50 bg-noir/95 shadow-[0_0_35px_rgba(193,155,110,0.16),0_18px_45px_rgba(0,0,0,0.6)] transition-[border-color,box-shadow] duration-300 hover:border-bronze-clair hover:shadow-[0_0_50px_rgba(193,155,110,0.3),0_18px_45px_rgba(0,0,0,0.6)] sm:h-32 sm:w-32`}
           >
-            <span className="gsc-orbit-rev flex h-full w-full flex-col items-center justify-center gap-0.5 rounded-full px-2 text-center sm:gap-1 sm:px-3">
+            <span className="gsc-orbit-rev flex h-full w-full flex-col items-center justify-center gap-0.5 rounded-full px-2.5 text-center sm:gap-1 sm:px-4">
               <CompanyGlyph
                 icon={company!.icon}
-                className="h-5 w-5 text-bronze transition-colors group-hover:text-bronze-clair sm:h-6 sm:w-6"
+                className="h-4 w-4 text-bronze transition-colors group-hover:text-bronze-clair sm:h-5 sm:w-5"
               />
-              <span className="mt-1 font-display text-[0.56rem] font-bold uppercase leading-tight tracking-[0.1em] text-creme sm:text-[0.66rem]">
+              <span className="mt-0.5 font-display text-[0.5rem] font-bold uppercase leading-tight tracking-[0.08em] text-creme sm:mt-1 sm:text-[0.62rem]">
                 {company!.name}
               </span>
-              <span className="font-mono text-[0.5rem] uppercase tracking-[0.16em] text-bronze">
+              <span className="font-mono text-[0.45rem] uppercase tracking-[0.14em] text-bronze sm:text-[0.5rem]">
                 {company!.cycleRole}
               </span>
             </span>
