@@ -32,3 +32,47 @@ body {
   background-color: var(--color-bronze);
   color: var(--color-noir);
 }
+
+/* Animations du schéma « atome » (système de groupe) */
+@keyframes gsc-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes gsc-rotate-rev {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes gsc-dash {
+  to {
+    stroke-dashoffset: -320;
+  }
+}
+
+.gsc-spin {
+  animation: gsc-rotate 90s linear infinite;
+}
+
+.gsc-spin-rev {
+  animation: gsc-rotate-rev 130s linear infinite;
+}
+
+.gsc-spin-core {
+  animation: gsc-rotate 60s linear infinite;
+}
+
+.gsc-dash-flow {
+  animation: gsc-dash 30s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gsc-spin,
+  .gsc-spin-rev,
+  .gsc-spin-core,
+  .gsc-dash-flow {
+    animation: none;
+  }
+}
