@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "Grey Stone Capital — Holding patrimoniale immobilière",
+    default: "Grey Stone Capital — Holding d'innovation immobilière",
     template: "%s — Grey Stone Capital",
   },
   description:

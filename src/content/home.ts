@@ -7,7 +7,7 @@
 
 export const home = {
   hero: {
-    kicker: "Holding patrimoniale immobilière",
+    kicker: "Holding d'innovation immobilière",
     title:
       "Grey Stone Capital prend des participations et crée des sociétés immobilières innovantes,",
     titleAccent: "créatrices de valeur pour les détenteurs d'actifs.",
