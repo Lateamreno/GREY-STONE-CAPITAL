@@ -23,14 +23,14 @@ export default function HomePage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-ligne">
-        {/* Photo d'immeubles haussmanniens, traitement sombre charte */}
+        {/* Photo de tours de verre (innovation immobilière), traitement sombre charte */}
         <Image
-          src="/images/hero-immeubles.jpg"
-          alt="Façades haussmanniennes à l'heure dorée, Paris"
+          src="/images/hero-tours.jpg"
+          alt="Tours de verre en contre-plongée, atrium doré illuminé"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[70%_45%] opacity-70 brightness-[0.75] saturate-[0.95]"
+          className="object-cover object-[60%_72%] opacity-65 brightness-[0.72] saturate-[0.9] sepia-[0.12]"
         />
         <div
           aria-hidden
