@@ -172,13 +172,13 @@ export default function HomePage() {
             />
           </div>
 
-          <div className="mt-4 grid border-t border-ligne sm:grid-cols-3 sm:border-l">
+          <div className="mt-4 grid divide-y divide-ligne sm:grid-cols-3 sm:divide-x sm:divide-y-0">
             {home.operer.items.map((item) => {
               const Icon = opererIcons[item.icon as keyof typeof opererIcons];
               return (
                 <div
                   key={item.title}
-                  className="flex flex-col gap-4 border-b border-ligne py-10 sm:border-b-0 sm:border-r sm:px-8 sm:py-12"
+                  className="flex flex-col gap-4 py-10 sm:px-8 sm:py-12 sm:first:pl-0"
                 >
                   <Icon className="h-7 w-7 text-bronze" />
                   <p className="font-mono text-xs uppercase tracking-[0.25em] text-bronze">
@@ -202,12 +202,12 @@ export default function HomePage() {
             {home.societesSection.title}
           </h2>
 
-          <div className="mt-16 grid border-t border-ligne sm:grid-cols-2">
+          <div className="mt-16 grid sm:grid-cols-2">
             {companies.map((company) => (
               <article
                 key={company.id}
                 id={`apercu-${company.slug}`}
-                className="group flex scroll-mt-24 flex-col gap-4 border-b border-ligne py-10 sm:px-8 sm:py-12 sm:odd:border-r"
+                className="group flex scroll-mt-24 flex-col gap-4 border-b border-ligne py-10 last:border-b-0 sm:px-8 sm:py-12 sm:odd:border-r sm:odd:pl-0 sm:[&:nth-child(n+3)]:border-b-0"
               >
                 <CompanyGlyph icon={company.icon} className="h-7 w-7 text-bronze" />
                 <p className="font-mono text-xs uppercase tracking-[0.2em] text-bronze">

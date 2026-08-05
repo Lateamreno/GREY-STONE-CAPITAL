@@ -129,11 +129,11 @@ export default async function SocietePage({
           <p className="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
             {societes.labels.savoirFaire}
           </p>
-          <div className="mt-10 grid border-t border-ligne sm:grid-cols-3 sm:border-l">
+          <div className="mt-10 grid divide-y divide-ligne sm:grid-cols-3 sm:divide-x sm:divide-y-0">
             {fiche.savoirFaire.map((item) => (
               <div
                 key={item.title}
-                className="flex flex-col gap-4 border-b border-ligne py-10 sm:border-b-0 sm:border-r sm:px-8 sm:py-12"
+                className="flex flex-col gap-4 py-10 sm:px-8 sm:py-12 sm:first:pl-0"
               >
                 <p className="font-mono text-xs uppercase tracking-[0.25em] text-bronze">
                   {item.title}
