@@ -13,7 +13,7 @@ export default function Footer() {
                 Grey Stone Capital
               </span>
               <span className="font-mono text-[0.55rem] uppercase tracking-[0.18em] text-bronze">
-                Holding d&rsquo;innovation immobilière
+                Catalyseur d&rsquo;innovation immobilière
               </span>
             </div>
           </div>
