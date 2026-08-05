@@ -132,6 +132,15 @@ export default function CycleDiagram() {
           <filter id="gsc-blur" x="-200%" y="-200%" width="400%" height="400%">
             <feGaussianBlur stdDeviation="2.6" />
           </filter>
+          <filter id="gsc-blur-lg" x="-200%" y="-200%" width="400%" height="400%">
+            <feGaussianBlur stdDeviation="9" />
+          </filter>
+          {/* Modelé sphérique du noyau : lumière haut-gauche, fond profond */}
+          <radialGradient id="gsc-sphere" cx="34%" cy="28%" r="85%">
+            <stop offset="0%" stopColor="#241f1a" />
+            <stop offset="45%" stopColor="#121110" />
+            <stop offset="100%" stopColor="#0a0a0a" />
+          </radialGradient>
         </defs>
 
         {/* Scintillements de fond */}
@@ -193,38 +202,57 @@ export default function CycleDiagram() {
           ))}
         </g>
 
-        {/* Halo et noyau */}
-        <circle cx="240" cy="240" r="120" fill="url(#gsc-glow)" />
+        {/* Halo et noyau — effet éclipse : couronne lumineuse asymétrique */}
+        <circle cx="240" cy="240" r="130" fill="url(#gsc-glow)" />
         <circle
           cx="240"
           cy="240"
-          r="78"
+          r="80"
           fill="none"
           stroke="#C19B6E"
-          strokeWidth="5"
-          opacity="0.4"
-          filter="url(#gsc-blur)"
+          strokeWidth="16"
+          opacity="0.3"
+          filter="url(#gsc-blur-lg)"
         />
-        <circle cx="240" cy="240" r="76" fill="#121110" />
-        <circle
-          cx="240"
-          cy="240"
-          r="78"
-          fill="none"
-          stroke="#E6D4BD"
-          strokeWidth="1.1"
-          opacity="0.85"
-        />
+        <circle cx="240" cy="240" r="76" fill="url(#gsc-sphere)" />
         <g className="gsc-spin-core" style={{ transformOrigin: "240px 240px" }}>
+          {/* Arc chaud principal (crème) */}
           <circle
             cx="240"
             cy="240"
-            r="88"
+            r="78"
+            fill="none"
+            stroke="#E6D4BD"
+            strokeWidth="2.6"
+            strokeLinecap="round"
+            strokeDasharray="300 191"
+            opacity="0.9"
+            filter="url(#gsc-blur)"
+            transform="rotate(-35 240 240)"
+          />
+          {/* Arc secondaire (bronze), en opposition */}
+          <circle
+            cx="240"
+            cy="240"
+            r="78"
             fill="none"
             stroke="#C19B6E"
-            strokeWidth="0.8"
-            strokeDasharray="1 6"
-            opacity="0.5"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeDasharray="150 341"
+            opacity="0.85"
+            filter="url(#gsc-blur)"
+            transform="rotate(120 240 240)"
+          />
+          {/* Liseré net */}
+          <circle
+            cx="240"
+            cy="240"
+            r="78"
+            fill="none"
+            stroke="#E6D4BD"
+            strokeWidth="0.7"
+            opacity="0.45"
           />
         </g>
       </svg>
@@ -248,7 +276,7 @@ export default function CycleDiagram() {
           <Link
             key={company!.id}
             href={`/societes/${company!.slug}`}
-            className={`group pointer-events-auto absolute ${position} h-[5.5rem] w-[5.5rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-bronze/50 bg-noir/95 shadow-[0_0_35px_rgba(193,155,110,0.16),0_18px_45px_rgba(0,0,0,0.6)] transition-[border-color,box-shadow] duration-300 hover:border-bronze-clair hover:shadow-[0_0_50px_rgba(193,155,110,0.3),0_18px_45px_rgba(0,0,0,0.6)] sm:h-32 sm:w-32`}
+            className={`group pointer-events-auto absolute ${position} h-[5.5rem] w-[5.5rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-bronze/50 bg-[radial-gradient(circle_at_32%_26%,#211d18,#0b0a09_72%)] shadow-[inset_0_-8px_18px_rgba(193,155,110,0.16),inset_0_6px_12px_rgba(0,0,0,0.55),0_0_30px_rgba(193,155,110,0.22),0_18px_45px_rgba(0,0,0,0.6)] transition-[border-color,box-shadow] duration-300 hover:border-bronze-clair hover:shadow-[inset_0_-8px_18px_rgba(193,155,110,0.24),inset_0_6px_12px_rgba(0,0,0,0.55),0_0_50px_rgba(193,155,110,0.35),0_18px_45px_rgba(0,0,0,0.6)] sm:h-32 sm:w-32`}
           >
             <span className="gsc-orbit-rev flex h-full w-full flex-col items-center justify-center gap-0.5 rounded-full px-2.5 text-center sm:gap-1 sm:px-4">
               <CompanyGlyph
