@@ -46,7 +46,7 @@ export const companies: Company[] = [
       "Maison de transaction dédiée aux vendeurs d'immeubles de rapport, sur un marché longtemps resté sans acteur spécialisé.",
     longDescription:
       "France Immeuble répond aux vendeurs d'immeubles de rapport, longtemps sans acteur dédié. La société pratique la transaction off-market spécialisée : identification d'acquéreurs qualifiés, discrétion, exécution rigoureuse.",
-    url: "https://www.franceimmeuble.fr",
+    url: "https://www.france-immeuble.fr",
     linkStatus: "external",
   },
   {
