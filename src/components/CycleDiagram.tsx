@@ -4,12 +4,13 @@ import { CompanyGlyph } from "@/components/icons";
 
 /**
  * Schéma du système de groupe — constellation orbitale rigide.
- * Quatre médaillons en X et six ellipses solidaires (rotation commune d'un
- * seul bloc). Toutes les ellipses partagent le même grand axe, égal à la
- * distance des médaillons, réparties sur les deux diagonales : leurs
- * pointes passent exactement sur les médaillons. Les étoiles circulent
- * au-dessus des médaillons (calque supérieur) et flashent à leur passage
- * (pointes = médaillons). Animations coupées avec prefers-reduced-motion.
+ * Quatre médaillons en X et les ellipses principales solidaires (rotation
+ * commune d'un seul bloc) : trois par diagonale, pointes exactement sur
+ * les médaillons, plus une ellipse principale libre. Les étoiles passent
+ * derrière les médaillons, vont vite, et brillent sur un large plateau
+ * autour de chaque médaillon (au moins un quart de course avant et après).
+ * Deux ellipses discrètes pointillées, étoilées, complètent le fond.
+ * Animations coupées avec prefers-reduced-motion.
  */
 
 /** Étoile à quatre branches */
@@ -17,7 +18,7 @@ const STAR_PATH = "M0 -4.2 L1.1 -1.1 L4.2 0 L1.1 1.1 L0 4.2 L-1.1 1.1 L-4.2 0 L-
 
 /** Décalage des médaillons : 26 % du viewBox (positions 24 % / 76 %) */
 const NODE_OFFSET = 0.26 * 480;
-/** Demi grand axe commun : la pointe de chaque ellipse touche un médaillon */
+/** Demi grand axe des ellipses en diagonale : pointes sur les médaillons */
 const RX = Math.round(NODE_OFFSET * Math.SQRT2 * 10) / 10;
 
 /** Trajectoire d'une ellipse rx/ry centrée (240,240), départ à la pointe droite */
@@ -26,32 +27,35 @@ function ellipsePath(rx: number, ry: number) {
 }
 
 /**
- * Six ellipses : trois par diagonale du X (45° et 135°), largeurs variées.
- * Départ du tracé à la pointe → l'étoile est sur un médaillon à t=0 et t=0,5.
+ * Ellipses principales : trois par diagonale du X (pointes sur les
+ * médaillons) + une libre, rattachée à rien. Étoiles rapides.
  */
-const VISIBLE_ELLIPSES = [
-  { ry: 48, angle: 45, dotted: false, starDur: "9s", starBegin: "0s" },
-  { ry: 68, angle: 45, dotted: true, starDur: "12s", starBegin: "-5s" },
-  { ry: 88, angle: 45, dotted: false, starDur: "14s", starBegin: "-8s" },
-  { ry: 48, angle: 135, dotted: true, starDur: "10s", starBegin: "-3s" },
-  { ry: 68, angle: 135, dotted: false, starDur: "15s", starBegin: "-11s" },
-  { ry: 88, angle: 135, dotted: true, starDur: "8s", starBegin: "-6s" },
+const MAIN_ELLIPSES = [
+  { rx: RX, ry: 48, angle: 45, dotted: false, starDur: "4.5s", starBegin: "0s" },
+  { rx: RX, ry: 68, angle: 45, dotted: true, starDur: "6s", starBegin: "-2.5s" },
+  { rx: RX, ry: 88, angle: 45, dotted: false, starDur: "7s", starBegin: "-4s" },
+  { rx: RX, ry: 48, angle: 135, dotted: true, starDur: "5s", starBegin: "-1.5s" },
+  { rx: RX, ry: 68, angle: 135, dotted: false, starDur: "6.5s", starBegin: "-5.5s" },
+  { rx: RX, ry: 88, angle: 135, dotted: true, starDur: "4s", starBegin: "-3s" },
+  // Ellipse principale libre — reliée à rien
+  { rx: RX, ry: 112, angle: 0, dotted: false, starDur: "5.5s", starBegin: "-2s" },
 ];
 
 /**
- * Brillance : flash net aux pointes (t=0 et t=0,5 — passage des médaillons),
- * intensité douce entre deux.
+ * Brillance : plateau lumineux couvrant au moins un quart de la course
+ * avant ET après chaque médaillon (pointes à t=0 et t=0,5), creux au
+ * milieu du trajet entre deux.
  */
 const STAR_PULSE = {
-  keyTimes: "0;0.1;0.4;0.5;0.6;0.9;1",
-  values: "1;0.45;0.45;1;0.45;0.45;1",
-  halo: "1;0;0;1;0;0;1",
+  keyTimes: "0;0.125;0.2;0.3;0.375;0.5;0.625;0.7;0.8;0.875;1",
+  values: "1;1;0.4;0.4;1;1;1;0.4;0.4;1;1",
+  halo: "1;1;0;0;1;1;1;0;0;1;1",
 };
 
-/** Ellipses discrètes de fond (vitesses propres) */
+/** Ellipses discrètes : pointillées, étoilées, vitesses de rotation propres */
 const FAINT_ELLIPSES = [
-  { rx: 205, ry: 88, angle: 35, spin: "gsc-spin-c" },
-  { rx: 195, ry: 80, angle: 125, spin: "gsc-spin-e" },
+  { rx: 205, ry: 88, angle: 35, spin: "gsc-spin-c", starDur: "11s", starBegin: "-4s" },
+  { rx: 195, ry: 80, angle: 125, spin: "gsc-spin-e", starDur: "13s", starBegin: "-8s" },
 ];
 
 /** Scintillements fixes en fond */
@@ -64,49 +68,48 @@ const TWINKLES = [
   { x: 210, y: 424, dur: "7s", begin: "-5s" },
 ];
 
-function OrbitStars() {
+function Star({
+  rx,
+  ry,
+  dur,
+  begin,
+  pulsed,
+}: {
+  rx: number;
+  ry: number;
+  dur: string;
+  begin: string;
+  pulsed: boolean;
+}) {
   return (
-    <g className="gsc-orbit" style={{ transformOrigin: "240px 240px" }}>
-      {VISIBLE_ELLIPSES.map((ellipse) => (
-        <g
-          key={`star-${ellipse.angle}-${ellipse.ry}`}
-          transform={`rotate(${ellipse.angle} 240 240)`}
-        >
-          <path d={STAR_PATH} fill="#E6D4BD" filter="url(#gsc-blur-stars)">
-            <animateMotion
-              dur={ellipse.starDur}
-              begin={ellipse.starBegin}
-              repeatCount="indefinite"
-              path={ellipsePath(RX, ellipse.ry)}
-            />
-            <animate
-              attributeName="opacity"
-              values={STAR_PULSE.halo}
-              keyTimes={STAR_PULSE.keyTimes}
-              dur={ellipse.starDur}
-              begin={ellipse.starBegin}
-              repeatCount="indefinite"
-            />
-          </path>
-          <path d={STAR_PATH} fill="#E6D4BD">
-            <animateMotion
-              dur={ellipse.starDur}
-              begin={ellipse.starBegin}
-              repeatCount="indefinite"
-              path={ellipsePath(RX, ellipse.ry)}
-            />
-            <animate
-              attributeName="opacity"
-              values={STAR_PULSE.values}
-              keyTimes={STAR_PULSE.keyTimes}
-              dur={ellipse.starDur}
-              begin={ellipse.starBegin}
-              repeatCount="indefinite"
-            />
-          </path>
-        </g>
-      ))}
-    </g>
+    <>
+      <path d={STAR_PATH} fill="#E6D4BD" filter="url(#gsc-blur)" opacity={pulsed ? undefined : 0.35}>
+        <animateMotion dur={dur} begin={begin} repeatCount="indefinite" path={ellipsePath(rx, ry)} />
+        {pulsed && (
+          <animate
+            attributeName="opacity"
+            values={STAR_PULSE.halo}
+            keyTimes={STAR_PULSE.keyTimes}
+            dur={dur}
+            begin={begin}
+            repeatCount="indefinite"
+          />
+        )}
+      </path>
+      <path d={STAR_PATH} fill="#E6D4BD" opacity={pulsed ? undefined : 0.7}>
+        <animateMotion dur={dur} begin={begin} repeatCount="indefinite" path={ellipsePath(rx, ry)} />
+        {pulsed && (
+          <animate
+            attributeName="opacity"
+            values={STAR_PULSE.values}
+            keyTimes={STAR_PULSE.keyTimes}
+            dur={dur}
+            begin={begin}
+            repeatCount="indefinite"
+          />
+        )}
+      </path>
+    </>
   );
 }
 
@@ -120,7 +123,6 @@ export default function CycleDiagram() {
 
   return (
     <div className="relative mx-auto aspect-square w-full max-w-lg">
-      {/* Calque inférieur : fond, ellipses, noyau */}
       <svg viewBox="0 0 480 480" className="h-full w-full" aria-hidden>
         <defs>
           <radialGradient id="gsc-glow" cx="50%" cy="50%" r="50%">
@@ -152,39 +154,47 @@ export default function CycleDiagram() {
           </circle>
         ))}
 
-        {/* Ellipses discrètes */}
+        {/* Ellipses discrètes pointillées, étoilées */}
         {FAINT_ELLIPSES.map((ellipse) => (
           <g
             key={`faint-${ellipse.angle}`}
             className={ellipse.spin}
             style={{ transformOrigin: "240px 240px" }}
           >
-            <ellipse
-              cx="240"
-              cy="240"
-              rx={ellipse.rx}
-              ry={ellipse.ry}
-              transform={`rotate(${ellipse.angle} 240 240)`}
-              fill="none"
-              stroke="#C19B6E"
-              strokeWidth="0.7"
-              strokeDasharray="1 8"
-              opacity="0.15"
-            />
+            <g transform={`rotate(${ellipse.angle} 240 240)`}>
+              <ellipse
+                cx="240"
+                cy="240"
+                rx={ellipse.rx}
+                ry={ellipse.ry}
+                fill="none"
+                stroke="#C19B6E"
+                strokeWidth="0.7"
+                strokeDasharray="1 8"
+                opacity="0.15"
+              />
+              <Star
+                rx={ellipse.rx}
+                ry={ellipse.ry}
+                dur={ellipse.starDur}
+                begin={ellipse.starBegin}
+                pulsed={false}
+              />
+            </g>
           </g>
         ))}
 
-        {/* Six ellipses solidaires des médaillons — pointes sur les médaillons */}
+        {/* Ellipses principales solidaires des médaillons + étoiles rapides */}
         <g className="gsc-orbit" style={{ transformOrigin: "240px 240px" }}>
-          {VISIBLE_ELLIPSES.map((ellipse) => (
+          {MAIN_ELLIPSES.map((ellipse) => (
             <g
-              key={`vis-${ellipse.angle}-${ellipse.ry}`}
+              key={`main-${ellipse.angle}-${ellipse.ry}`}
               transform={`rotate(${ellipse.angle} 240 240)`}
             >
               <ellipse
                 cx="240"
                 cy="240"
-                rx={RX}
+                rx={ellipse.rx}
                 ry={ellipse.ry}
                 fill="none"
                 stroke="#C19B6E"
@@ -192,6 +202,13 @@ export default function CycleDiagram() {
                 strokeDasharray={ellipse.dotted ? "0.1 8" : undefined}
                 strokeLinecap="round"
                 opacity={ellipse.dotted ? 0.45 : 0.38}
+              />
+              <Star
+                rx={ellipse.rx}
+                ry={ellipse.ry}
+                dur={ellipse.starDur}
+                begin={ellipse.starBegin}
+                pulsed
               />
             </g>
           ))}
@@ -267,20 +284,6 @@ export default function CycleDiagram() {
           </Link>
         ))}
       </div>
-
-      {/* Calque supérieur : les étoiles passent devant les médaillons */}
-      <svg
-        viewBox="0 0 480 480"
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        aria-hidden
-      >
-        <defs>
-          <filter id="gsc-blur-stars" x="-200%" y="-200%" width="400%" height="400%">
-            <feGaussianBlur stdDeviation="2.6" />
-          </filter>
-        </defs>
-        <OrbitStars />
-      </svg>
     </div>
   );
 }
