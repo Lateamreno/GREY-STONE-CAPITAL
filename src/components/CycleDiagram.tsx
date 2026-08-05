@@ -4,13 +4,13 @@ import { CompanyGlyph } from "@/components/icons";
 
 /**
  * Schéma du système de groupe — constellation orbitale rigide.
- * Quatre médaillons en X et les ellipses principales solidaires (rotation
- * commune d'un seul bloc) : trois par diagonale, pointes exactement sur
- * les médaillons, plus une ellipse principale libre. Les étoiles passent
- * derrière les médaillons, vont vite, et brillent sur un large plateau
- * autour de chaque médaillon (au moins un quart de course avant et après).
- * Deux ellipses discrètes pointillées, étoilées, complètent le fond.
- * Animations coupées avec prefers-reduced-motion.
+ * Quatre médaillons en X. Trois ellipses principales fines en trait plein
+ * disposées en étoile : deux sur les diagonales (pointes exactement sur
+ * les médaillons, au ras du centre) et une verticale libre. Deux ellipses
+ * pointillées plus larges forment le X décoratif. Le tout est solidaire
+ * et tourne d'un seul bloc avec les médaillons. Étoiles rapides derrière
+ * les médaillons, brillantes sur un large plateau autour de chaque
+ * passage. Animations coupées avec prefers-reduced-motion.
  */
 
 /** Étoile à quatre branches */
@@ -27,18 +27,20 @@ function ellipsePath(rx: number, ry: number) {
 }
 
 /**
- * Ellipses principales : trois par diagonale du X (pointes sur les
- * médaillons) + une libre, rattachée à rien. Étoiles rapides.
+ * Trois ellipses principales fines (trait plein) en étoile : deux
+ * diagonales — pointes sur les médaillons — et une verticale libre.
  */
 const MAIN_ELLIPSES = [
-  { rx: RX, ry: 48, angle: 45, dotted: false, starDur: "4.5s", starBegin: "0s" },
-  { rx: RX, ry: 68, angle: 45, dotted: true, starDur: "6s", starBegin: "-2.5s" },
-  { rx: RX, ry: 88, angle: 45, dotted: false, starDur: "7s", starBegin: "-4s" },
-  { rx: RX, ry: 48, angle: 135, dotted: true, starDur: "5s", starBegin: "-1.5s" },
-  { rx: RX, ry: 68, angle: 135, dotted: false, starDur: "6.5s", starBegin: "-5.5s" },
-  { rx: RX, ry: 88, angle: 135, dotted: true, starDur: "4s", starBegin: "-3s" },
-  // Ellipse principale libre — reliée à rien
-  { rx: RX, ry: 112, angle: 0, dotted: false, starDur: "5.5s", starBegin: "-2s" },
+  { rx: RX, ry: 46, angle: 45, dotted: false, starDur: "4.5s", starBegin: "0s" },
+  { rx: RX, ry: 46, angle: 135, dotted: false, starDur: "6s", starBegin: "-2.5s" },
+  // Ellipse principale libre — verticale, reliée à rien
+  { rx: RX, ry: 46, angle: 90, dotted: false, starDur: "5s", starBegin: "-1.5s" },
+];
+
+/** Deux ellipses pointillées plus larges : le X décoratif, solidaire du bloc */
+const DOTTED_ELLIPSES = [
+  { rx: RX, ry: 95, angle: 45, dotted: true, starDur: "9s", starBegin: "-3s" },
+  { rx: RX, ry: 95, angle: 135, dotted: true, starDur: "11s", starBegin: "-6s" },
 ];
 
 /**
@@ -51,12 +53,6 @@ const STAR_PULSE = {
   values: "1;1;0.4;0.4;1;1;1;0.4;0.4;1;1",
   halo: "1;1;0;0;1;1;1;0;0;1;1",
 };
-
-/** Ellipses discrètes : pointillées, étoilées, vitesses de rotation propres */
-const FAINT_ELLIPSES = [
-  { rx: 205, ry: 88, angle: 35, spin: "gsc-spin-c", starDur: "11s", starBegin: "-4s" },
-  { rx: 195, ry: 80, angle: 125, spin: "gsc-spin-e", starDur: "13s", starBegin: "-8s" },
-];
 
 /** Scintillements fixes en fond */
 const TWINKLES = [
@@ -154,41 +150,11 @@ export default function CycleDiagram() {
           </circle>
         ))}
 
-        {/* Ellipses discrètes pointillées, étoilées */}
-        {FAINT_ELLIPSES.map((ellipse) => (
-          <g
-            key={`faint-${ellipse.angle}`}
-            className={ellipse.spin}
-            style={{ transformOrigin: "240px 240px" }}
-          >
-            <g transform={`rotate(${ellipse.angle} 240 240)`}>
-              <ellipse
-                cx="240"
-                cy="240"
-                rx={ellipse.rx}
-                ry={ellipse.ry}
-                fill="none"
-                stroke="#C19B6E"
-                strokeWidth="0.7"
-                strokeDasharray="1 8"
-                opacity="0.15"
-              />
-              <Star
-                rx={ellipse.rx}
-                ry={ellipse.ry}
-                dur={ellipse.starDur}
-                begin={ellipse.starBegin}
-                pulsed={false}
-              />
-            </g>
-          </g>
-        ))}
-
-        {/* Ellipses principales solidaires des médaillons + étoiles rapides */}
+        {/* Bloc solidaire : 3 ellipses principales fines + X pointillé + étoiles */}
         <g className="gsc-orbit" style={{ transformOrigin: "240px 240px" }}>
-          {MAIN_ELLIPSES.map((ellipse) => (
+          {[...DOTTED_ELLIPSES, ...MAIN_ELLIPSES].map((ellipse) => (
             <g
-              key={`main-${ellipse.angle}-${ellipse.ry}`}
+              key={`ell-${ellipse.angle}-${ellipse.ry}`}
               transform={`rotate(${ellipse.angle} 240 240)`}
             >
               <ellipse
@@ -198,17 +164,17 @@ export default function CycleDiagram() {
                 ry={ellipse.ry}
                 fill="none"
                 stroke="#C19B6E"
-                strokeWidth={ellipse.dotted ? 1.4 : 0.9}
+                strokeWidth={ellipse.dotted ? 1.2 : 0.8}
                 strokeDasharray={ellipse.dotted ? "0.1 8" : undefined}
                 strokeLinecap="round"
-                opacity={ellipse.dotted ? 0.45 : 0.38}
+                opacity={ellipse.dotted ? 0.4 : 0.48}
               />
               <Star
                 rx={ellipse.rx}
                 ry={ellipse.ry}
                 dur={ellipse.starDur}
                 begin={ellipse.starBegin}
-                pulsed
+                pulsed={!ellipse.dotted}
               />
             </g>
           ))}

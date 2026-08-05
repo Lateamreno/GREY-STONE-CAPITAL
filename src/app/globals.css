@@ -62,31 +62,6 @@ body {
   animation: gsc-rotate-rev 110s linear infinite;
 }
 
-/* Ellipses discrètes : vitesses lentes propres */
-.gsc-spin-a {
-  animation: gsc-rotate 80s linear infinite;
-}
-
-.gsc-spin-b {
-  animation: gsc-rotate-rev 105s linear infinite;
-}
-
-.gsc-spin-c {
-  animation: gsc-rotate 130s linear infinite;
-}
-
-.gsc-spin-d {
-  animation: gsc-rotate-rev 90s linear infinite;
-}
-
-.gsc-spin-e {
-  animation: gsc-rotate 145s linear infinite;
-}
-
-.gsc-spin-f {
-  animation: gsc-rotate-rev 70s linear infinite;
-}
-
 .gsc-spin-core {
   animation: gsc-rotate 60s linear infinite;
 }
@@ -98,12 +73,6 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .gsc-orbit,
   .gsc-orbit-rev,
-  .gsc-spin-a,
-  .gsc-spin-b,
-  .gsc-spin-c,
-  .gsc-spin-d,
-  .gsc-spin-e,
-  .gsc-spin-f,
   .gsc-spin-core,
   .gsc-dash-flow {
     animation: none;
