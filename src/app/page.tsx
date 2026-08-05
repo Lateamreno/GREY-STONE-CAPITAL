@@ -57,7 +57,7 @@ export default function HomePage() {
           {companies.map((company, index) => (
             <Link
               key={company.id}
-              href={`/societes/${company.slug}`}
+              href={`#apercu-${company.slug}`}
               className={`group flex items-start gap-4 px-6 py-8 transition-colors hover:bg-noir-3 ${
                 index > 0 ? "border-t border-ligne" : ""
               } sm:[&:nth-child(-n+2)]:border-t-0 sm:even:border-l sm:[&:nth-child(n+3)]:border-t lg:border-t-0 lg:border-l lg:first:border-l-0`}
@@ -175,7 +175,8 @@ export default function HomePage() {
             {companies.map((company) => (
               <article
                 key={company.id}
-                className="group flex flex-col gap-4 border-b border-ligne py-10 sm:px-8 sm:py-12 sm:odd:border-r"
+                id={`apercu-${company.slug}`}
+                className="group flex scroll-mt-24 flex-col gap-4 border-b border-ligne py-10 sm:px-8 sm:py-12 sm:odd:border-r"
               >
                 <CompanyGlyph icon={company.icon} className="h-7 w-7 text-bronze" />
                 <p className="font-mono text-xs uppercase tracking-[0.2em] text-bronze">
