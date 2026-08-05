@@ -32,7 +32,7 @@ export default function Header() {
         <nav className="hidden items-center gap-8 sm:flex">
           <Link
             href="/#groupe"
-            className="text-sm text-gris transition-colors hover:text-creme"
+            className="rounded-full bg-bronze px-5 py-2 text-sm font-medium text-noir transition-colors hover:bg-bronze-clair"
           >
             Le groupe
           </Link>

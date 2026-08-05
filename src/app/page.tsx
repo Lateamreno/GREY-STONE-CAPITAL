@@ -57,8 +57,10 @@ export default function HomePage() {
             <span className="text-bronze">{home.hero.titleAccent}</span>
           </h1>
           <div className="mt-12 flex flex-wrap gap-4">
+            <PillLink href="/#groupe" variant="solid">
+              Le groupe
+            </PillLink>
             <PillLink href="/societes">Les sociétés</PillLink>
-            <PillLink href="/#groupe">Le groupe</PillLink>
           </div>
         </div>
       </section>
