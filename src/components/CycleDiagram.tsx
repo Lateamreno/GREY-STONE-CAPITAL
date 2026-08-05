@@ -80,8 +80,8 @@ export default function CycleDiagram() {
       {/* Nœuds sociétés */}
       {[
         { company: a, position: "left-1/2 top-0 -translate-x-1/2 -translate-y-1/3" },
-        { company: c, position: "bottom-0 right-0 translate-y-1/4 sm:translate-x-1/4" },
-        { company: b, position: "bottom-0 left-0 translate-y-1/4 sm:-translate-x-1/4" },
+        { company: b, position: "bottom-0 right-0 translate-y-1/4 sm:translate-x-1/4" },
+        { company: c, position: "bottom-0 left-0 translate-y-1/4 sm:-translate-x-1/4" },
       ].map(({ company, position }) => (
         <div
           key={company.id}

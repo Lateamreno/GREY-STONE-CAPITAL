@@ -68,7 +68,7 @@ export default function HomePage() {
               />
               <span className="flex flex-col gap-1">
                 <span className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-gris transition-colors group-hover:text-bronze">
-                  {company.relation}
+                  {company.metier}
                 </span>
                 <span className="font-display text-lg font-bold text-creme transition-colors group-hover:text-bronze-clair">
                   {company.name}
@@ -179,7 +179,7 @@ export default function HomePage() {
               >
                 <CompanyGlyph icon={company.icon} className="h-7 w-7 text-bronze" />
                 <p className="font-mono text-xs uppercase tracking-[0.2em] text-bronze">
-                  {company.relation}
+                  {company.metier}
                 </p>
                 <h3 className="font-display text-2xl font-bold text-creme">
                   {company.name}
@@ -190,18 +190,18 @@ export default function HomePage() {
                 <p className="text-sm leading-relaxed text-gris">
                   {company.shortDescription}
                 </p>
-                <div className="mt-auto flex items-center gap-6 pt-4 text-sm font-medium">
+                <div className="mt-auto flex flex-wrap items-center gap-5 pt-4 text-sm font-medium">
                   <Link
                     href={`/societes/${company.slug}`}
                     className="text-bronze transition-colors hover:text-bronze-clair"
                   >
-                    Découvrir
+                    En savoir plus
                   </Link>
                   <a
                     href={company.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-gris transition-colors hover:text-creme"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-bronze px-4 py-1.5 text-xs font-medium text-bronze transition-colors hover:bg-bronze hover:text-noir"
                   >
                     Site <IconArrowUpRight className="h-3.5 w-3.5" />
                   </a>

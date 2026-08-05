@@ -49,7 +49,7 @@ export default function SocietesPage() {
             >
               <CompanyGlyph icon={company.icon} className="h-8 w-8 text-bronze" />
               <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-bronze">
-                {company.relation}
+                {company.metier}
               </p>
               <h2 className="font-display text-2xl font-bold text-creme">
                 {company.name}
@@ -73,7 +73,7 @@ export default function SocietesPage() {
                   href={company.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative z-10 inline-flex items-center gap-1 text-gris transition-colors hover:text-creme"
+                  className="relative z-10 inline-flex items-center gap-1.5 rounded-full border border-bronze px-4 py-1.5 text-xs font-medium text-bronze transition-colors hover:bg-bronze hover:text-noir"
                 >
                   Site <IconArrowUpRight className="h-3.5 w-3.5" />
                 </a>

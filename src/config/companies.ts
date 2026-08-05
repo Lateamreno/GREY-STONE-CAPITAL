@@ -30,6 +30,11 @@ export interface Company {
   relation: string;
   /** Variante autorisée du vocabulaire de relation, si applicable */
   relationAlt?: string;
+  /**
+   * Métier affiché en étiquette (cartes, menus) — la relation exacte
+   * (règle n°2) reste mentionnée dans les textes et sur la page société.
+   */
+  metier: string;
   /** Rôle dans le cycle du groupe (schéma des synergies) */
   cycleRole: string;
   /** Picto associé */
@@ -50,7 +55,8 @@ export const companies: Company[] = [
     provisionalName: false,
     relation: "participation historique",
     relationAlt: "actionnaire de référence",
-    cycleRole: "Céder",
+    metier: "Spécialiste immeuble",
+    cycleRole: "Accompagner",
     icon: "building",
     baseline: "La vente d'immeubles de rapport, en spécialité.",
     shortDescription:
@@ -66,6 +72,7 @@ export const companies: Company[] = [
     name: "La Team Reno",
     provisionalName: true,
     relation: "filiale",
+    metier: "Spécialiste travaux",
     cycleRole: "Valoriser",
     icon: "roller",
     baseline: "La réhabilitation d'immeubles, de bout en bout.",
@@ -82,7 +89,8 @@ export const companies: Company[] = [
     name: "PleinBail",
     provisionalName: false,
     relation: "création du groupe",
-    cycleRole: "Louer & investir",
+    metier: "Marketplace d'investissement",
+    cycleRole: "Diffuser",
     icon: "platform",
     baseline: "Les annonces de l'immobilier d'investissement.",
     shortDescription:

@@ -27,7 +27,7 @@ export const societes = {
     synergie: "Dans le système du groupe",
     visit: "Visiter le site",
     all: "Toutes les sociétés",
-    discover: "Découvrir",
+    discover: "En savoir plus",
   },
   fiches: [
     {

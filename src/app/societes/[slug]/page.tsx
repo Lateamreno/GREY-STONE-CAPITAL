@@ -54,7 +54,7 @@ export default async function SocietePage({
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 pb-20 pt-24 sm:pt-32 lg:grid-cols-[7fr_4fr]">
           <div>
             <p className="mb-8 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
-              {company.relation}
+              {company.metier}
             </p>
             <div className="flex items-center gap-5">
               <CompanyGlyph icon={company.icon} className="h-10 w-10 shrink-0 text-bronze" />
@@ -64,6 +64,9 @@ export default async function SocietePage({
             </div>
             <p className="mt-6 text-lg font-medium text-creme/80">
               {company.baseline}
+            </p>
+            <p className="mt-4 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-gris">
+              Grey Stone Capital — {company.relation}
             </p>
             <p className="mt-6 max-w-2xl leading-relaxed text-gris">
               {company.longDescription}

@@ -58,7 +58,7 @@ export default function Header() {
                       {company.name}
                     </span>
                     <span className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-bronze">
-                      {company.relation}
+                      {company.metier}
                     </span>
                   </Link>
                 ))}
@@ -123,7 +123,7 @@ export default function Header() {
             >
               <span className="text-sm text-creme">{company.name}</span>
               <span className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-bronze">
-                {company.relation}
+                {company.metier}
               </span>
             </Link>
           ))}
