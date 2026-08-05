@@ -57,6 +57,29 @@ const STAR_PULSE = {
   halo: "1;1;0;0;1;1;1;0;0;1;1",
 };
 
+/**
+ * Poussière d'or : particules déterministes (générateur à graine fixe,
+ * indispensable pour le rendu statique) dispersées derrière le système.
+ */
+function makeDust(count: number) {
+  let seed = 42;
+  const rnd = () => {
+    seed = (seed * 16807) % 2147483647;
+    return seed / 2147483647;
+  };
+  return Array.from({ length: count }, (_, index) => ({
+    x: Math.round(rnd() * 470 + 5),
+    y: Math.round(rnd() * 470 + 5),
+    r: Math.round((rnd() * 0.7 + 0.4) * 100) / 100,
+    opacity: Math.round((rnd() * 0.2 + 0.08) * 100) / 100,
+    creme: rnd() > 0.65,
+    twinkle: index % 4 === 0,
+    dur: `${Math.round((rnd() * 5 + 4) * 10) / 10}s`,
+    begin: `-${Math.round(rnd() * 60) / 10}s`,
+  }));
+}
+const DUST = makeDust(70);
+
 /** Scintillements fixes en fond */
 const TWINKLES = [
   { x: 96, y: 120, dur: "6s", begin: "0s" },
@@ -143,7 +166,36 @@ export default function CycleDiagram() {
             <stop offset="45%" stopColor="#131211" />
             <stop offset="100%" stopColor="#0f0e0d" />
           </radialGradient>
+          {/* Halo interne : la lueur remplit tout le disque, plus forte au bord */}
+          <radialGradient id="gsc-core-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="rgba(193,155,110,0.07)" />
+            <stop offset="55%" stopColor="rgba(193,155,110,0.10)" />
+            <stop offset="82%" stopColor="rgba(193,155,110,0.17)" />
+            <stop offset="100%" stopColor="rgba(193,155,110,0.30)" />
+          </radialGradient>
         </defs>
+
+        {/* Poussière d'or en fond */}
+        {DUST.map((dust, index) => (
+          <circle
+            key={`dust-${index}`}
+            cx={dust.x}
+            cy={dust.y}
+            r={dust.r}
+            fill={dust.creme ? "#E6D4BD" : "#C19B6E"}
+            opacity={dust.twinkle ? undefined : dust.opacity}
+          >
+            {dust.twinkle && (
+              <animate
+                attributeName="opacity"
+                values={`${dust.opacity * 0.3};${Math.min(dust.opacity * 2.2, 0.5)};${dust.opacity * 0.3}`}
+                dur={dust.dur}
+                begin={dust.begin}
+                repeatCount="indefinite"
+              />
+            )}
+          </circle>
+        ))}
 
         {/* Scintillements de fond */}
         {TWINKLES.map((twinkle) => (
@@ -217,6 +269,7 @@ export default function CycleDiagram() {
           filter="url(#gsc-blur-lg)"
         />
         <circle cx="240" cy="240" r="76" fill="url(#gsc-sphere)" />
+        <circle cx="240" cy="240" r="76" fill="url(#gsc-core-glow)" />
         <g className="gsc-spin-core" style={{ transformOrigin: "240px 240px" }}>
           {/* Arc chaud principal (crème) */}
           <circle
@@ -278,7 +331,7 @@ export default function CycleDiagram() {
           <Link
             key={company!.id}
             href={`/societes/${company!.slug}`}
-            className={`group pointer-events-auto absolute ${position} h-[4.75rem] w-[4.75rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-bronze/50 bg-[radial-gradient(circle_at_32%_26%,#211d18,#0f0e0d_72%)] shadow-[inset_0_-8px_18px_rgba(193,155,110,0.16),inset_0_6px_12px_rgba(0,0,0,0.55),0_0_30px_rgba(193,155,110,0.22),0_18px_45px_rgba(0,0,0,0.6)] transition-[border-color,box-shadow] duration-300 hover:border-bronze-clair hover:shadow-[inset_0_-8px_18px_rgba(193,155,110,0.24),inset_0_6px_12px_rgba(0,0,0,0.55),0_0_50px_rgba(193,155,110,0.35),0_18px_45px_rgba(0,0,0,0.6)] sm:h-24 sm:w-24`}
+            className={`group pointer-events-auto absolute ${position} h-[5rem] w-[5rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-bronze/50 bg-[radial-gradient(circle_at_32%_26%,#211d18,#0f0e0d_72%)] shadow-[inset_0_-8px_18px_rgba(193,155,110,0.16),inset_0_6px_12px_rgba(0,0,0,0.55),0_0_30px_rgba(193,155,110,0.22),0_18px_45px_rgba(0,0,0,0.6)] transition-[border-color,box-shadow] duration-300 hover:border-bronze-clair hover:shadow-[inset_0_-8px_18px_rgba(193,155,110,0.24),inset_0_6px_12px_rgba(0,0,0,0.55),0_0_50px_rgba(193,155,110,0.35),0_18px_45px_rgba(0,0,0,0.6)] sm:h-28 sm:w-28`}
           >
             <span className="gsc-orbit-rev flex h-full w-full flex-col items-center justify-center gap-0.5 rounded-full px-2.5 text-center sm:gap-1 sm:px-4">
               <CompanyGlyph
