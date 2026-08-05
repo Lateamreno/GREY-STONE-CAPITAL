@@ -97,8 +97,8 @@ export default function SocietesPage() {
           <h2 className="max-w-2xl font-display text-3xl font-bold leading-tight text-creme">
             Un système derrière chaque société.
           </h2>
-          <PillLink href="/groupe" className="mt-10">
-            Découvrir le groupe
+          <PillLink href="/#systeme" className="mt-10">
+            Découvrir le système
           </PillLink>
         </div>
       </section>

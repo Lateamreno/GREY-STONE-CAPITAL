@@ -25,8 +25,13 @@ export default function Footer() {
           </p>
           <ul className="flex flex-col gap-3 text-sm">
             <li>
-              <Link href="/groupe" className="text-gris transition-colors hover:text-creme">
+              <Link href="/#groupe" className="text-gris transition-colors hover:text-creme">
                 Le groupe
+              </Link>
+            </li>
+            <li>
+              <Link href="/#systeme" className="text-gris transition-colors hover:text-creme">
+                Le système
               </Link>
             </li>
             <li>

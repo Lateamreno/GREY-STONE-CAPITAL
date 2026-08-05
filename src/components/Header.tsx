@@ -26,10 +26,16 @@ export default function Header() {
         {/* Navigation desktop */}
         <nav className="hidden items-center gap-8 sm:flex">
           <Link
-            href="/groupe"
+            href="/#groupe"
             className="text-sm text-gris transition-colors hover:text-creme"
           >
             Le groupe
+          </Link>
+          <Link
+            href="/#systeme"
+            className="text-sm text-gris transition-colors hover:text-creme"
+          >
+            Le système
           </Link>
 
           <div className="group relative">
@@ -88,11 +94,18 @@ export default function Header() {
       {open && (
         <nav className="border-t border-ligne bg-noir sm:hidden">
           <Link
-            href="/groupe"
+            href="/#groupe"
             onClick={close}
             className="block border-b border-ligne px-6 py-5 font-display text-lg font-bold text-creme"
           >
             Le groupe
+          </Link>
+          <Link
+            href="/#systeme"
+            onClick={close}
+            className="block border-b border-ligne px-6 py-5 font-display text-lg font-bold text-creme"
+          >
+            Le système
           </Link>
           <Link
             href="/societes"

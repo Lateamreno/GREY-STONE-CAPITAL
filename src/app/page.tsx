@@ -4,7 +4,19 @@ import { home } from "@/content/home";
 import PillLink from "@/components/PillLink";
 import FacadeMotif from "@/components/FacadeMotif";
 import CycleDiagram from "@/components/CycleDiagram";
-import { CompanyGlyph, IconArrowUpRight } from "@/components/icons";
+import {
+  CompanyGlyph,
+  IconArrowUpRight,
+  IconCreate,
+  IconLayers,
+  IconScreen,
+} from "@/components/icons";
+
+const opererIcons = {
+  create: IconCreate,
+  layers: IconLayers,
+  screen: IconScreen,
+} as const;
 
 export default function HomePage() {
   return (
@@ -30,7 +42,7 @@ export default function HomePage() {
             </h1>
             <div className="mt-12 flex flex-wrap gap-4">
               <PillLink href="/societes">Les sociétés</PillLink>
-              <PillLink href="/groupe">Le groupe</PillLink>
+              <PillLink href="/#groupe">Le groupe</PillLink>
             </div>
           </div>
           <div className="hidden justify-end lg:flex">
@@ -67,19 +79,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Manifeste */}
-      <section className="border-b border-ligne">
+      {/* Le groupe — manifeste et histoire */}
+      <section id="groupe" className="scroll-mt-24 border-b border-ligne">
         <div className="mx-auto grid max-w-6xl gap-12 px-6 py-24 sm:py-28 lg:grid-cols-[5fr_7fr]">
           <div>
             <p className="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
-              {home.manifesto.kicker}
+              {home.groupe.kicker}
             </p>
             <h2 className="font-display text-3xl font-bold leading-tight text-creme sm:text-4xl">
-              {home.manifesto.title}
+              {home.groupe.title}
             </h2>
           </div>
           <div className="flex flex-col gap-6 lg:pt-12">
-            {home.manifesto.paragraphs.map((paragraph) => (
+            {home.groupe.paragraphs.map((paragraph) => (
               <p key={paragraph} className="leading-relaxed text-gris">
                 {paragraph}
               </p>
@@ -89,25 +101,62 @@ export default function HomePage() {
       </section>
 
       {/* Le système — cycle et synergies */}
-      <section className="border-b border-ligne bg-noir-2">
-        <div className="mx-auto grid max-w-6xl items-center gap-16 px-6 py-24 sm:py-28 lg:grid-cols-2">
-          <div>
-            <p className="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
-              {home.cycle.kicker}
+      <section id="systeme" className="scroll-mt-24 border-b border-ligne bg-noir-2">
+        <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
+          <p className="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
+            {home.systeme.kicker}
+          </p>
+          <h2 className="max-w-2xl font-display text-3xl font-bold leading-tight text-creme sm:text-4xl">
+            {home.systeme.title}
+          </h2>
+
+          <blockquote className="mt-12 max-w-3xl border-l-2 border-bronze pl-6 sm:pl-8">
+            <p className="font-display text-xl font-bold leading-relaxed text-bronze-clair sm:text-2xl">
+              « {home.systeme.pullQuote} »
             </p>
-            <h2 className="font-display text-3xl font-bold leading-tight text-creme sm:text-4xl">
-              {home.cycle.title}
-            </h2>
-            <div className="mt-8 flex flex-col gap-6">
-              {home.cycle.paragraphs.map((paragraph) => (
+          </blockquote>
+
+          <div className="mt-14 grid items-center gap-16 lg:grid-cols-2">
+            <div className="flex flex-col gap-6">
+              {home.systeme.paragraphs.map((paragraph) => (
                 <p key={paragraph} className="leading-relaxed text-gris">
                   {paragraph}
                 </p>
               ))}
             </div>
+            <div className="px-4 py-6 sm:px-10">
+              <CycleDiagram />
+            </div>
           </div>
-          <div className="px-4 py-10 sm:px-10">
-            <CycleDiagram />
+        </div>
+      </section>
+
+      {/* Manière d'opérer */}
+      <section className="border-b border-ligne">
+        <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
+          <p className="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
+            {home.operer.kicker}
+          </p>
+          <h2 className="max-w-2xl font-display text-3xl font-bold leading-tight text-creme sm:text-4xl">
+            {home.operer.title}
+          </h2>
+
+          <div className="mt-16 grid border-t border-ligne sm:grid-cols-3 sm:border-l">
+            {home.operer.items.map((item) => {
+              const Icon = opererIcons[item.icon as keyof typeof opererIcons];
+              return (
+                <div
+                  key={item.title}
+                  className="flex flex-col gap-4 border-b border-ligne py-10 sm:border-b-0 sm:border-r sm:px-8 sm:py-12"
+                >
+                  <Icon className="h-7 w-7 text-bronze" />
+                  <p className="font-mono text-xs uppercase tracking-[0.25em] text-bronze">
+                    {item.title}
+                  </p>
+                  <p className="text-sm leading-relaxed text-gris">{item.text}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -116,10 +165,10 @@ export default function HomePage() {
       <section className="border-b border-ligne">
         <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
           <p className="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
-            {home.companiesSection.kicker}
+            {home.societesSection.kicker}
           </p>
           <h2 className="max-w-2xl font-display text-3xl font-bold leading-tight text-creme sm:text-4xl">
-            {home.companiesSection.title}
+            {home.societesSection.title}
           </h2>
 
           <div className="mt-16 grid border-t border-ligne lg:grid-cols-3 lg:border-l">
@@ -183,8 +232,8 @@ export default function HomePage() {
           <p className="mt-6 max-w-xl leading-relaxed text-gris">
             {home.closing.text}
           </p>
-          <PillLink href="/groupe" className="mt-10">
-            Découvrir le groupe
+          <PillLink href="/societes" className="mt-10">
+            Voir les sociétés
           </PillLink>
         </div>
       </section>
