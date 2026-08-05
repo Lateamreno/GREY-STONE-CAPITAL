@@ -3,189 +3,228 @@ import { companyById } from "@/config/companies";
 import { CompanyGlyph } from "@/components/icons";
 
 /**
- * Schéma « atome » du système de groupe : noyau Grey Stone Capital
- * (vision de groupe, synergies), quatre sociétés sur l'anneau, orbites
- * elliptiques et particules bronze en circulation — les échanges vont
- * dans tous les sens, la holding organise. Animations désactivées si
- * prefers-reduced-motion.
+ * Schéma du système de groupe — version « constellation orbitale » :
+ * noyau Grey Stone Capital, quatre sociétés en médaillons ronds disposés
+ * en X qui orbitent lentement autour du noyau (contenu contre-tourné pour
+ * rester droit, pause au survol), six ellipses visibles en rotation avec
+ * des étoiles circulant le long, plus des ellipses discrètes en fond.
+ * Animations coupées avec prefers-reduced-motion.
  */
 
-const RING_PATH =
-  "M 410 240 A 170 170 0 1 1 70 240 A 170 170 0 1 1 410 240";
-const ELLIPSE_PATH =
-  "M 445 240 A 205 80 0 1 1 35 240 A 205 80 0 1 1 445 240";
-const CENTER = { transformOrigin: "240px 240px" };
+/** Étoile à quatre branches (échelle ~unité) */
+const STAR_PATH = "M0 -4.2 L1.1 -1.1 L4.2 0 L1.1 1.1 L0 4.2 L-1.1 1.1 L-4.2 0 L-1.1 -1.1 Z";
+
+/** Trajectoire d'une ellipse rx/ry centrée (240,240), départ à droite */
+function ellipsePath(rx: number, ry: number) {
+  return `M ${240 + rx} 240 A ${rx} ${ry} 0 1 1 ${240 - rx} 240 A ${rx} ${ry} 0 1 1 ${240 + rx} 240`;
+}
+
+/** Six ellipses visibles : taille contenue, angles répartis, étoile embarquée */
+const VISIBLE_ELLIPSES = [
+  { rx: 175, ry: 68, angle: 20, spin: "gsc-spin-a", dotted: false, starDur: "18s", starBegin: "0s" },
+  { rx: 160, ry: 62, angle: 80, spin: "gsc-spin-b", dotted: true, starDur: "23s", starBegin: "-6s" },
+  { rx: 182, ry: 72, angle: 140, spin: "gsc-spin-c", dotted: false, starDur: "27s", starBegin: "-12s" },
+  { rx: 155, ry: 58, angle: 50, spin: "gsc-spin-d", dotted: true, starDur: "21s", starBegin: "-3s" },
+  { rx: 170, ry: 65, angle: 110, spin: "gsc-spin-e", dotted: false, starDur: "31s", starBegin: "-16s" },
+  { rx: 165, ry: 60, angle: 170, spin: "gsc-spin-f", dotted: true, starDur: "16s", starBegin: "-9s" },
+];
+
+/** Ellipses discrètes de fond */
+const FAINT_ELLIPSES = [
+  { rx: 205, ry: 88, angle: 35, spin: "gsc-spin-c" },
+  { rx: 195, ry: 80, angle: 125, spin: "gsc-spin-e" },
+];
+
+/** Scintillements fixes en fond */
+const TWINKLES = [
+  { x: 96, y: 120, dur: "6s", begin: "0s" },
+  { x: 388, y: 96, dur: "7.5s", begin: "-2s" },
+  { x: 420, y: 300, dur: "5.5s", begin: "-4s" },
+  { x: 70, y: 330, dur: "8s", begin: "-1s" },
+  { x: 250, y: 60, dur: "6.5s", begin: "-3s" },
+  { x: 210, y: 424, dur: "7s", begin: "-5s" },
+];
 
 export default function CycleDiagram() {
-  const top = companyById("france-immeuble");
-  const right = companyById("team-reno");
-  const bottom = companyById("fi-division");
-  const left = companyById("pleinbail");
-  if (!top || !right || !bottom || !left) return null;
-
   const nodes = [
-    { company: top, position: "left-1/2 top-[14.6%]" },
-    { company: right, position: "left-[85.4%] top-1/2" },
-    { company: bottom, position: "left-1/2 top-[85.4%]" },
-    { company: left, position: "left-[14.6%] top-1/2" },
-  ];
+    { company: companyById("france-immeuble"), position: "left-[27.5%] top-[27.5%]" },
+    { company: companyById("team-reno"), position: "left-[72.5%] top-[27.5%]" },
+    { company: companyById("pleinbail"), position: "left-[27.5%] top-[72.5%]" },
+    { company: companyById("fi-division"), position: "left-[72.5%] top-[72.5%]" },
+  ].filter((node) => node.company !== undefined);
 
   return (
-    <div className="relative mx-auto w-full max-w-lg px-2 py-8">
-      <svg viewBox="0 0 480 480" className="w-full" aria-hidden>
+    <div className="relative mx-auto aspect-square w-full max-w-lg">
+      <svg viewBox="0 0 480 480" className="h-full w-full" aria-hidden>
         <defs>
           <radialGradient id="gsc-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="rgba(193,155,110,0.18)" />
-            <stop offset="55%" stopColor="rgba(193,155,110,0.06)" />
+            <stop offset="0%" stopColor="rgba(193,155,110,0.20)" />
+            <stop offset="55%" stopColor="rgba(193,155,110,0.07)" />
             <stop offset="100%" stopColor="rgba(193,155,110,0)" />
           </radialGradient>
           <filter id="gsc-blur" x="-200%" y="-200%" width="400%" height="400%">
-            <feGaussianBlur stdDeviation="2.4" />
+            <feGaussianBlur stdDeviation="2.6" />
           </filter>
         </defs>
 
-        {/* Halo du noyau */}
-        <circle cx="240" cy="240" r="120" fill="url(#gsc-glow)" />
+        {/* Scintillements de fond */}
+        {TWINKLES.map((twinkle) => (
+          <circle
+            key={`${twinkle.x}-${twinkle.y}`}
+            cx={twinkle.x}
+            cy={twinkle.y}
+            r="1.3"
+            fill="#E6D4BD"
+          >
+            <animate
+              attributeName="opacity"
+              values="0.08;0.7;0.08"
+              dur={twinkle.dur}
+              begin={twinkle.begin}
+              repeatCount="indefinite"
+            />
+          </circle>
+        ))}
 
-        {/* Orbites elliptiques inclinées, en rotation lente */}
-        <g className="gsc-spin" style={CENTER}>
-          <ellipse
-            cx="240"
-            cy="240"
-            rx="205"
-            ry="80"
-            transform="rotate(55 240 240)"
-            fill="none"
-            stroke="#C19B6E"
-            strokeWidth="0.8"
-            strokeDasharray="1 7"
-            opacity="0.35"
-          />
-        </g>
-        <g className="gsc-spin-rev" style={CENTER}>
-          <ellipse
-            cx="240"
-            cy="240"
-            rx="205"
-            ry="80"
-            transform="rotate(-55 240 240)"
-            fill="none"
-            stroke="#C19B6E"
-            strokeWidth="0.8"
-            strokeDasharray="1 7"
-            opacity="0.3"
-          />
-        </g>
+        {/* Ellipses discrètes */}
+        {FAINT_ELLIPSES.map((ellipse) => (
+          <g
+            key={`faint-${ellipse.angle}`}
+            className={ellipse.spin}
+            style={{ transformOrigin: "240px 240px" }}
+          >
+            <ellipse
+              cx="240"
+              cy="240"
+              rx={ellipse.rx}
+              ry={ellipse.ry}
+              transform={`rotate(${ellipse.angle} 240 240)`}
+              fill="none"
+              stroke="#C19B6E"
+              strokeWidth="0.7"
+              strokeDasharray="1 8"
+              opacity="0.15"
+            />
+          </g>
+        ))}
 
-        {/* Anneau principal : trait fin + flux pointillé en mouvement */}
+        {/* Six ellipses visibles + étoiles en circulation */}
+        {VISIBLE_ELLIPSES.map((ellipse) => (
+          <g
+            key={`vis-${ellipse.angle}`}
+            className={ellipse.spin}
+            style={{ transformOrigin: "240px 240px" }}
+          >
+            <g transform={`rotate(${ellipse.angle} 240 240)`}>
+              <ellipse
+                cx="240"
+                cy="240"
+                rx={ellipse.rx}
+                ry={ellipse.ry}
+                fill="none"
+                stroke="#C19B6E"
+                strokeWidth={ellipse.dotted ? 1.4 : 0.9}
+                strokeDasharray={ellipse.dotted ? "0.1 8" : undefined}
+                strokeLinecap="round"
+                opacity={ellipse.dotted ? 0.45 : 0.38}
+              />
+              {/* Étoile filante le long de l'ellipse */}
+              <g opacity="0.95">
+                <path d={STAR_PATH} fill="#E6D4BD" filter="url(#gsc-blur)" opacity="0.6">
+                  <animateMotion
+                    dur={ellipse.starDur}
+                    begin={ellipse.starBegin}
+                    repeatCount="indefinite"
+                    path={ellipsePath(ellipse.rx, ellipse.ry)}
+                  />
+                </path>
+                <path d={STAR_PATH} fill="#E6D4BD">
+                  <animateMotion
+                    dur={ellipse.starDur}
+                    begin={ellipse.starBegin}
+                    repeatCount="indefinite"
+                    path={ellipsePath(ellipse.rx, ellipse.ry)}
+                  />
+                </path>
+              </g>
+            </g>
+          </g>
+        ))}
+
+        {/* Halo et noyau */}
+        <circle cx="240" cy="240" r="130" fill="url(#gsc-glow)" />
         <circle
           cx="240"
           cy="240"
-          r="170"
-          fill="none"
-          stroke="#282522"
-          strokeWidth="1"
-        />
-        <circle
-          className="gsc-dash-flow"
-          cx="240"
-          cy="240"
-          r="170"
+          r="84"
           fill="none"
           stroke="#C19B6E"
-          strokeWidth="1"
-          strokeDasharray="2 14"
-          opacity="0.5"
+          strokeWidth="5"
+          opacity="0.4"
+          filter="url(#gsc-blur)"
         />
-
-        {/* Particules en circulation */}
-        <circle r="2.6" fill="#E6D4BD" filter="url(#gsc-blur)">
-          <animateMotion dur="16s" repeatCount="indefinite" path={RING_PATH} />
-        </circle>
-        <circle r="2.6" fill="#E6D4BD" opacity="0.9">
-          <animateMotion dur="16s" repeatCount="indefinite" path={RING_PATH} />
-        </circle>
-        <circle r="2" fill="#C19B6E" opacity="0.85">
-          <animateMotion
-            dur="23s"
-            begin="-9s"
-            repeatCount="indefinite"
-            path={RING_PATH}
-          />
-        </circle>
-        <g transform="rotate(55 240 240)">
-          <circle r="1.8" fill="#C19B6E" opacity="0.75">
-            <animateMotion
-              dur="19s"
-              repeatCount="indefinite"
-              path={ELLIPSE_PATH}
-            />
-          </circle>
-        </g>
-        <g transform="rotate(-55 240 240)">
-          <circle r="1.8" fill="#C19B6E" opacity="0.75">
-            <animateMotion
-              dur="27s"
-              begin="-7s"
-              repeatCount="indefinite"
-              path={ELLIPSE_PATH}
-            />
-          </circle>
-        </g>
-
-        {/* Noyau */}
-        <g className="gsc-spin-core" style={CENTER}>
+        <circle cx="240" cy="240" r="82" fill="#121110" />
+        <circle
+          cx="240"
+          cy="240"
+          r="84"
+          fill="none"
+          stroke="#E6D4BD"
+          strokeWidth="1.1"
+          opacity="0.85"
+        />
+        <g className="gsc-spin-core" style={{ transformOrigin: "240px 240px" }}>
           <circle
             cx="240"
             cy="240"
-            r="74"
+            r="94"
             fill="none"
             stroke="#C19B6E"
             strokeWidth="0.8"
             strokeDasharray="1 6"
-            opacity="0.6"
+            opacity="0.5"
           />
         </g>
-        <circle
-          cx="240"
-          cy="240"
-          r="62"
-          fill="#121110"
-          stroke="#C19B6E"
-          strokeWidth="1"
-        />
       </svg>
 
       {/* Noyau — holding */}
-      <div className="absolute left-1/2 top-1/2 flex w-32 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center">
-        <span aria-hidden className="mb-2 block h-4 w-px bg-bronze" />
-        <p className="font-display text-[0.65rem] font-bold uppercase leading-tight tracking-[0.18em] text-creme">
+      <div className="absolute left-1/2 top-1/2 flex w-40 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center">
+        <p className="font-display text-xl font-extrabold tracking-[0.14em] text-bronze">
+          GS
+        </p>
+        <p className="mt-2 font-display text-[0.7rem] font-bold uppercase leading-tight tracking-[0.2em] text-creme">
           Grey Stone Capital
         </p>
-        <p className="mt-1 font-mono text-[0.52rem] uppercase tracking-[0.14em] text-gris">
+        <span aria-hidden className="my-2 block h-px w-8 bg-bronze/60" />
+        <p className="font-mono text-[0.52rem] uppercase tracking-[0.16em] text-gris">
           Vision de groupe · synergies
         </p>
       </div>
 
-      {/* Nœuds sociétés — sur l'anneau, cliquables */}
-      {nodes.map(({ company, position }) => (
-        <Link
-          key={company.id}
-          href={`/societes/${company.slug}`}
-          className={`group absolute ${position} flex w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1.5 border border-ligne bg-noir px-2.5 py-3 text-center shadow-[0_16px_40px_rgba(0,0,0,0.55)] transition-all duration-300 hover:-translate-y-[calc(50%_+_3px)] hover:border-bronze sm:w-36 sm:px-4`}
-        >
-          <CompanyGlyph
-            icon={company.icon}
-            className="h-5 w-5 text-bronze transition-colors group-hover:text-bronze-clair"
-          />
-          <p className="font-display text-[0.66rem] font-bold leading-tight text-creme sm:text-xs">
-            {company.name}
-          </p>
-          <p className="font-mono text-[0.52rem] uppercase tracking-[0.16em] text-bronze">
-            {company.cycleRole}
-          </p>
-        </Link>
-      ))}
+      {/* Carrousel des sociétés — disposition en X, orbite lente */}
+      <div className="gsc-orbit pointer-events-none absolute inset-0">
+        {nodes.map(({ company, position }) => (
+          <Link
+            key={company!.id}
+            href={`/societes/${company!.slug}`}
+            className={`group pointer-events-auto absolute ${position} h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border border-bronze/50 bg-noir/95 shadow-[0_0_35px_rgba(193,155,110,0.16),0_18px_45px_rgba(0,0,0,0.6)] transition-[border-color,box-shadow] duration-300 hover:border-bronze-clair hover:shadow-[0_0_50px_rgba(193,155,110,0.3),0_18px_45px_rgba(0,0,0,0.6)] sm:h-36 sm:w-36`}
+          >
+            <span className="gsc-orbit-rev flex h-full w-full flex-col items-center justify-center gap-0.5 rounded-full px-2 text-center sm:gap-1 sm:px-3">
+              <CompanyGlyph
+                icon={company!.icon}
+                className="h-5 w-5 text-bronze transition-colors group-hover:text-bronze-clair sm:h-6 sm:w-6"
+              />
+              <span className="mt-1 font-display text-[0.56rem] font-bold uppercase leading-tight tracking-[0.1em] text-creme sm:text-[0.66rem]">
+                {company!.name}
+              </span>
+              <span className="font-mono text-[0.5rem] uppercase tracking-[0.16em] text-bronze">
+                {company!.cycleRole}
+              </span>
+              <span aria-hidden className="mt-0.5 block h-px w-5 bg-bronze/60" />
+            </span>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

@@ -52,12 +52,44 @@ body {
   }
 }
 
-.gsc-spin {
-  animation: gsc-rotate 90s linear infinite;
+/* Carrousel des sociétés : rotation autour du noyau, contenu contre-tourné
+   pour rester droit. Survol d'un médaillon = pause (lecture, clic). */
+.gsc-orbit {
+  animation: gsc-rotate 110s linear infinite;
 }
 
-.gsc-spin-rev {
-  animation: gsc-rotate-rev 130s linear infinite;
+.gsc-orbit-rev {
+  animation: gsc-rotate-rev 110s linear infinite;
+}
+
+.gsc-orbit:hover,
+.gsc-orbit:hover .gsc-orbit-rev {
+  animation-play-state: paused;
+}
+
+/* Ellipses : six visibles + discrètes, vitesses lentes variées */
+.gsc-spin-a {
+  animation: gsc-rotate 80s linear infinite;
+}
+
+.gsc-spin-b {
+  animation: gsc-rotate-rev 105s linear infinite;
+}
+
+.gsc-spin-c {
+  animation: gsc-rotate 130s linear infinite;
+}
+
+.gsc-spin-d {
+  animation: gsc-rotate-rev 90s linear infinite;
+}
+
+.gsc-spin-e {
+  animation: gsc-rotate 145s linear infinite;
+}
+
+.gsc-spin-f {
+  animation: gsc-rotate-rev 70s linear infinite;
 }
 
 .gsc-spin-core {
@@ -69,8 +101,14 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gsc-spin,
-  .gsc-spin-rev,
+  .gsc-orbit,
+  .gsc-orbit-rev,
+  .gsc-spin-a,
+  .gsc-spin-b,
+  .gsc-spin-c,
+  .gsc-spin-d,
+  .gsc-spin-e,
+  .gsc-spin-f,
   .gsc-spin-core,
   .gsc-dash-flow {
     animation: none;
