@@ -3,12 +3,12 @@ import { companyById } from "@/config/companies";
 import { CompanyGlyph } from "@/components/icons";
 
 /**
- * Schéma du système de groupe — version « constellation orbitale » :
- * noyau Grey Stone Capital, quatre sociétés en médaillons ronds disposés
- * en X qui orbitent lentement autour du noyau (contenu contre-tourné pour
- * rester droit, pause au survol), six ellipses visibles en rotation avec
- * des étoiles circulant le long, plus des ellipses discrètes en fond.
- * Animations coupées avec prefers-reduced-motion.
+ * Schéma du système de groupe — constellation orbitale rigide :
+ * noyau Grey Stone Capital ; quatre sociétés en médaillons ronds disposés
+ * en X et six ellipses étoilées, solidaires (même rotation lente d'un seul
+ * bloc, contenu des médaillons contre-tourné pour rester droit). Étoiles
+ * rapides, brillance pulsée par quart d'ellipse. Ellipses discrètes en
+ * fond à vitesses propres. Animations coupées avec prefers-reduced-motion.
  */
 
 /** Étoile à quatre branches (échelle ~unité) */
@@ -19,15 +19,26 @@ function ellipsePath(rx: number, ry: number) {
   return `M ${240 + rx} 240 A ${rx} ${ry} 0 1 1 ${240 - rx} 240 A ${rx} ${ry} 0 1 1 ${240 + rx} 240`;
 }
 
-/** Six ellipses visibles : taille contenue, angles répartis, étoile embarquée */
+/**
+ * Six ellipses visibles : figées par rapport aux médaillons (le groupe
+ * entier tourne d'un bloc avec le carrousel). Étoiles rapides, brillance
+ * pulsée par quart d'ellipse (passage des médaillons).
+ */
 const VISIBLE_ELLIPSES = [
-  { rx: 175, ry: 68, angle: 20, spin: "gsc-spin-a", dotted: false, starDur: "18s", starBegin: "0s" },
-  { rx: 160, ry: 62, angle: 80, spin: "gsc-spin-b", dotted: true, starDur: "23s", starBegin: "-6s" },
-  { rx: 182, ry: 72, angle: 140, spin: "gsc-spin-c", dotted: false, starDur: "27s", starBegin: "-12s" },
-  { rx: 155, ry: 58, angle: 50, spin: "gsc-spin-d", dotted: true, starDur: "21s", starBegin: "-3s" },
-  { rx: 170, ry: 65, angle: 110, spin: "gsc-spin-e", dotted: false, starDur: "31s", starBegin: "-16s" },
-  { rx: 165, ry: 60, angle: 170, spin: "gsc-spin-f", dotted: true, starDur: "16s", starBegin: "-9s" },
+  { rx: 175, ry: 68, angle: 20, dotted: false, starDur: "9s", starBegin: "0s" },
+  { rx: 160, ry: 62, angle: 80, dotted: true, starDur: "12s", starBegin: "-4s" },
+  { rx: 182, ry: 72, angle: 140, dotted: false, starDur: "14s", starBegin: "-7s" },
+  { rx: 155, ry: 58, angle: 50, dotted: true, starDur: "10s", starBegin: "-2s" },
+  { rx: 170, ry: 65, angle: 110, dotted: false, starDur: "15s", starBegin: "-11s" },
+  { rx: 165, ry: 60, angle: 170, dotted: true, starDur: "8s", starBegin: "-5s" },
 ];
+
+/** Brillance des étoiles : pic à chaque quart de tour, retour au calme entre deux */
+const STAR_PULSE = {
+  values: "1;0.4;1;0.4;1;0.4;1;0.4;1",
+  halo: "0.9;0.1;0.9;0.1;0.9;0.1;0.9;0.1;0.9",
+  keyTimes: "0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1",
+};
 
 /** Ellipses discrètes de fond */
 const FAINT_ELLIPSES = [
@@ -47,10 +58,10 @@ const TWINKLES = [
 
 export default function CycleDiagram() {
   const nodes = [
-    { company: companyById("france-immeuble"), position: "left-[26%] top-[26%]" },
-    { company: companyById("team-reno"), position: "left-[74%] top-[26%]" },
-    { company: companyById("pleinbail"), position: "left-[26%] top-[74%]" },
-    { company: companyById("fi-division"), position: "left-[74%] top-[74%]" },
+    { company: companyById("france-immeuble"), position: "left-[24%] top-[24%]" },
+    { company: companyById("team-reno"), position: "left-[76%] top-[24%]" },
+    { company: companyById("pleinbail"), position: "left-[24%] top-[76%]" },
+    { company: companyById("fi-division"), position: "left-[76%] top-[76%]" },
   ].filter((node) => node.company !== undefined);
 
   return (
@@ -108,14 +119,13 @@ export default function CycleDiagram() {
           </g>
         ))}
 
-        {/* Six ellipses visibles + étoiles en circulation */}
-        {VISIBLE_ELLIPSES.map((ellipse) => (
-          <g
-            key={`vis-${ellipse.angle}`}
-            className={ellipse.spin}
-            style={{ transformOrigin: "240px 240px" }}
-          >
-            <g transform={`rotate(${ellipse.angle} 240 240)`}>
+        {/* Six ellipses solidaires des médaillons (rotation commune) + étoiles */}
+        <g className="gsc-orbit" style={{ transformOrigin: "240px 240px" }}>
+          {VISIBLE_ELLIPSES.map((ellipse) => (
+            <g
+              key={`vis-${ellipse.angle}`}
+              transform={`rotate(${ellipse.angle} 240 240)`}
+            >
               <ellipse
                 cx="240"
                 cy="240"
@@ -128,28 +138,42 @@ export default function CycleDiagram() {
                 strokeLinecap="round"
                 opacity={ellipse.dotted ? 0.45 : 0.38}
               />
-              {/* Étoile filante le long de l'ellipse */}
-              <g opacity="0.95">
-                <path d={STAR_PATH} fill="#E6D4BD" filter="url(#gsc-blur)" opacity="0.6">
-                  <animateMotion
-                    dur={ellipse.starDur}
-                    begin={ellipse.starBegin}
-                    repeatCount="indefinite"
-                    path={ellipsePath(ellipse.rx, ellipse.ry)}
-                  />
-                </path>
-                <path d={STAR_PATH} fill="#E6D4BD">
-                  <animateMotion
-                    dur={ellipse.starDur}
-                    begin={ellipse.starBegin}
-                    repeatCount="indefinite"
-                    path={ellipsePath(ellipse.rx, ellipse.ry)}
-                  />
-                </path>
-              </g>
+              {/* Étoile rapide, brillance pulsée par quart d'ellipse */}
+              <path d={STAR_PATH} fill="#E6D4BD" filter="url(#gsc-blur)">
+                <animateMotion
+                  dur={ellipse.starDur}
+                  begin={ellipse.starBegin}
+                  repeatCount="indefinite"
+                  path={ellipsePath(ellipse.rx, ellipse.ry)}
+                />
+                <animate
+                  attributeName="opacity"
+                  values={STAR_PULSE.halo}
+                  keyTimes={STAR_PULSE.keyTimes}
+                  dur={ellipse.starDur}
+                  begin={ellipse.starBegin}
+                  repeatCount="indefinite"
+                />
+              </path>
+              <path d={STAR_PATH} fill="#E6D4BD">
+                <animateMotion
+                  dur={ellipse.starDur}
+                  begin={ellipse.starBegin}
+                  repeatCount="indefinite"
+                  path={ellipsePath(ellipse.rx, ellipse.ry)}
+                />
+                <animate
+                  attributeName="opacity"
+                  values={STAR_PULSE.values}
+                  keyTimes={STAR_PULSE.keyTimes}
+                  dur={ellipse.starDur}
+                  begin={ellipse.starBegin}
+                  repeatCount="indefinite"
+                />
+              </path>
             </g>
-          </g>
-        ))}
+          ))}
+        </g>
 
         {/* Halo et noyau */}
         <circle cx="240" cy="240" r="120" fill="url(#gsc-glow)" />

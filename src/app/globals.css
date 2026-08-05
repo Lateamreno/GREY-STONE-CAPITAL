@@ -62,12 +62,7 @@ body {
   animation: gsc-rotate-rev 110s linear infinite;
 }
 
-.gsc-orbit:hover,
-.gsc-orbit:hover .gsc-orbit-rev {
-  animation-play-state: paused;
-}
-
-/* Ellipses : six visibles + discrètes, vitesses lentes variées */
+/* Ellipses discrètes : vitesses lentes propres */
 .gsc-spin-a {
   animation: gsc-rotate 80s linear infinite;
 }
