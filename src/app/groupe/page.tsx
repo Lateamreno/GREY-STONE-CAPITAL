@@ -1,12 +1,20 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { groupe } from "@/content/groupe";
+import PillLink from "@/components/PillLink";
+import CycleDiagram from "@/components/CycleDiagram";
+import { IconCreate, IconLayers, IconScreen } from "@/components/icons";
 
 export const metadata: Metadata = {
   title: "Le groupe",
   description:
     "Histoire, thèse d'investissement et manière d'opérer du groupe Grey Stone Capital.",
 };
+
+const opererIcons = {
+  create: IconCreate,
+  layers: IconLayers,
+  screen: IconScreen,
+} as const;
 
 export default function GroupePage() {
   return (
@@ -21,7 +29,7 @@ export default function GroupePage() {
               "radial-gradient(ellipse 80% 60% at 70% 0%, rgba(193,155,110,0.07), transparent 60%)",
           }}
         />
-        <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-28 sm:pt-36">
+        <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-24 sm:pt-32">
           <p className="mb-8 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
             {groupe.hero.kicker}
           </p>
@@ -55,13 +63,13 @@ export default function GroupePage() {
         </div>
       </section>
 
-      {/* Thèse d'investissement */}
+      {/* Thèse d'investissement + système */}
       <section className="border-b border-ligne bg-noir-2">
         <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
           <p className="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
             {groupe.these.kicker}
           </p>
-          <h2 className="font-display text-3xl font-bold leading-tight text-creme">
+          <h2 className="max-w-3xl font-display text-3xl font-bold leading-tight text-creme">
             {groupe.these.title}
           </h2>
 
@@ -71,12 +79,17 @@ export default function GroupePage() {
             </p>
           </blockquote>
 
-          <div className="mt-12 grid max-w-4xl gap-6">
-            {groupe.these.paragraphs.map((paragraph) => (
-              <p key={paragraph} className="leading-relaxed text-gris">
-                {paragraph}
-              </p>
-            ))}
+          <div className="mt-14 grid items-center gap-16 lg:grid-cols-2">
+            <div className="flex flex-col gap-6">
+              {groupe.these.paragraphs.map((paragraph) => (
+                <p key={paragraph} className="leading-relaxed text-gris">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+            <div className="px-4 py-6 sm:px-10">
+              <CycleDiagram />
+            </div>
           </div>
         </div>
       </section>
@@ -92,22 +105,26 @@ export default function GroupePage() {
           </h2>
 
           <div className="mt-16 grid border-t border-ligne sm:grid-cols-3 sm:border-l">
-            {groupe.operer.items.map((item) => (
-              <div
-                key={item.title}
-                className="flex flex-col gap-4 border-b border-ligne py-10 sm:border-b-0 sm:border-r sm:px-8 sm:py-12"
-              >
-                <p className="font-mono text-xs uppercase tracking-[0.25em] text-bronze">
-                  {item.title}
-                </p>
-                <p className="text-sm leading-relaxed text-gris">{item.text}</p>
-              </div>
-            ))}
+            {groupe.operer.items.map((item) => {
+              const Icon = opererIcons[item.icon as keyof typeof opererIcons];
+              return (
+                <div
+                  key={item.title}
+                  className="flex flex-col gap-4 border-b border-ligne py-10 sm:border-b-0 sm:border-r sm:px-8 sm:py-12"
+                >
+                  <Icon className="h-7 w-7 text-bronze" />
+                  <p className="font-mono text-xs uppercase tracking-[0.25em] text-bronze">
+                    {item.title}
+                  </p>
+                  <p className="text-sm leading-relaxed text-gris">{item.text}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Vers les participations */}
+      {/* Vers les sociétés */}
       <section className="relative overflow-hidden">
         <div
           aria-hidden
@@ -124,12 +141,9 @@ export default function GroupePage() {
           <h2 className="max-w-2xl font-display text-3xl font-bold leading-tight text-creme">
             {groupe.closing.title}
           </h2>
-          <Link
-            href="/participations"
-            className="mt-10 rounded-full bg-bronze px-7 py-3 text-sm font-medium text-noir transition-colors hover:bg-bronze-clair"
-          >
-            Voir les participations
-          </Link>
+          <PillLink href="/societes" className="mt-10">
+            Voir les sociétés
+          </PillLink>
         </div>
       </section>
     </>

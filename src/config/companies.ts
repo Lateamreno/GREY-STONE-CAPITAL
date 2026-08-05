@@ -4,14 +4,18 @@
  * RÈGLE N°2 (véracité des participations) — le champ `relation` porte le
  * vocabulaire exact et ne doit être reformulé nulle part ailleurs.
  * RÈGLE N°3 (noms provisoires) — le jour d'un renommage, on ne modifie
- * QUE ce fichier : nom, baseline, URL.
+ * QUE ce fichier : nom, baseline, URL, slug.
  */
 
 export type LinkStatus = "live" | "external";
+export type CompanyId = "france-immeuble" | "team-reno" | "pleinbail";
+export type CompanyIcon = "building" | "roller" | "platform";
 
 export interface Company {
   /** Identifiant technique stable (ne change pas lors d'un renommage) */
-  id: "france-immeuble" | "team-reno" | "pleinbail";
+  id: CompanyId;
+  /** Segment d'URL de la page dédiée (/societes/[slug]) */
+  slug: string;
   /** Nom affiché — provisoire si `provisionalName` est vrai */
   name: string;
   /** Nom provisoire en attente de renommage (règle n°3) */
@@ -26,6 +30,10 @@ export interface Company {
   relation: string;
   /** Variante autorisée du vocabulaire de relation, si applicable */
   relationAlt?: string;
+  /** Rôle dans le cycle du groupe (schéma des synergies) */
+  cycleRole: string;
+  /** Picto associé */
+  icon: CompanyIcon;
   baseline: string;
   shortDescription: string;
   longDescription: string;
@@ -37,10 +45,13 @@ export interface Company {
 export const companies: Company[] = [
   {
     id: "france-immeuble",
+    slug: "france-immeuble",
     name: "France Immeuble",
     provisionalName: false,
     relation: "participation historique",
     relationAlt: "actionnaire de référence",
+    cycleRole: "Céder",
+    icon: "building",
     baseline: "La vente d'immeubles de rapport, en spécialité.",
     shortDescription:
       "Maison de transaction dédiée aux vendeurs d'immeubles de rapport, sur un marché longtemps resté sans acteur spécialisé.",
@@ -51,9 +62,12 @@ export const companies: Company[] = [
   },
   {
     id: "team-reno",
+    slug: "la-team-reno",
     name: "La Team Reno",
     provisionalName: true,
     relation: "filiale",
+    cycleRole: "Valoriser",
+    icon: "roller",
     baseline: "La réhabilitation d'immeubles, de bout en bout.",
     shortDescription:
       "Filiale travaux du groupe, dédiée à la réhabilitation d'immeubles, née pour servir les clients historiques.",
@@ -64,9 +78,12 @@ export const companies: Company[] = [
   },
   {
     id: "pleinbail",
+    slug: "pleinbail",
     name: "PleinBail",
     provisionalName: false,
     relation: "création du groupe",
+    cycleRole: "Louer & investir",
+    icon: "platform",
     baseline: "Les annonces de l'immobilier d'investissement.",
     shortDescription:
       "Plateforme d'annonces dédiée à l'immobilier d'investissement, créée pour combler l'absence d'acteur de qualité.",
@@ -78,6 +95,10 @@ export const companies: Company[] = [
     linkStatus: "external",
   },
 ];
+
+export function companyBySlug(slug: string): Company | undefined {
+  return companies.find((company) => company.slug === slug);
+}
 
 /**
  * Sous-bloc de la fiche France Immeuble — jamais une fiche séparée.

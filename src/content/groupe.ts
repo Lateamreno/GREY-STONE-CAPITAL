@@ -6,7 +6,7 @@
 export const groupe = {
   hero: {
     kicker: "Le groupe",
-    title: "Une holding discrète. Des sociétés qui opèrent.",
+    title: "Une vision de groupe, des sociétés qui opèrent.",
     intro:
       "Grey Stone Capital est une holding patrimoniale à dominante immobilière. Le groupe réunit, anime et développe des sociétés immobilières innovantes, chacune dédiée à un besoin précis des détenteurs d'actifs.",
   },
@@ -20,12 +20,12 @@ export const groupe = {
   },
   these: {
     kicker: "Thèse d'investissement",
-    title: "La spécialité crée la valeur.",
+    title: "La spécialité crée la valeur. Le système la fait circuler.",
     pullQuote:
       "Grey Stone Capital prend des participations et crée des sociétés immobilières innovantes, créatrices de valeur pour les détenteurs d'actifs.",
     paragraphs: [
       "Le marché immobilier d'investissement s'est longtemps contenté d'acteurs généralistes. Or un immeuble de rapport ne se vend pas comme un appartement ; il ne se réhabilite pas comme une maison ; il ne se cherche pas sur les portails grand public. Chaque geste demande une spécialité, une organisation et des outils qui lui soient propres.",
-      "Le groupe investit là où cette spécialité fait défaut. Il privilégie les positions de long terme, les marchés étroits mais profonds, et les métiers où la qualité d'exécution se constate — transaction, travaux, diffusion. La discrétion est un choix : les sociétés portent leur propre marque, la holding reste en retrait.",
+      "Le groupe investit là où cette spécialité fait défaut, et relie ses sociétés en un système qui s'entretient : chacune prend en charge un temps de la vie d'un actif, chacune alimente les autres. Les sociétés portent leur propre marque et leur propre clientèle ; la holding centralise la vision de groupe, organise les synergies et prépare les développements futurs.",
       "Ce que le groupe apporte à chaque société dépasse le capital : une exigence commune, une infrastructure partagée et le temps nécessaire pour construire une position de référence.",
     ],
   },
@@ -34,21 +34,24 @@ export const groupe = {
     title: "Le groupe crée, structure, digitalise.",
     items: [
       {
+        icon: "create",
         title: "Créer",
         text: "Identifier un angle mort du marché, dessiner la société qui y répond, la porter jusqu'à ses premiers clients.",
       },
       {
+        icon: "layers",
         title: "Structurer",
         text: "Doter chaque société d'une marque claire, d'une organisation propre et d'une discipline d'exécution constante.",
       },
       {
+        icon: "screen",
         title: "Digitaliser",
         text: "Équiper chaque métier d'outils numériques à la hauteur de ses standards, du premier contact à la livraison.",
       },
     ],
   },
   closing: {
-    kicker: "Participations",
+    kicker: "Sociétés",
     title: "Les sociétés du groupe, en détail.",
   },
 } as const;

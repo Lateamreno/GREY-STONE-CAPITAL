@@ -30,8 +30,8 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/participations" className="text-gris transition-colors hover:text-creme">
-                Participations
+              <Link href="/societes" className="text-gris transition-colors hover:text-creme">
+                Sociétés
               </Link>
             </li>
           </ul>
@@ -44,14 +44,12 @@ export default function Footer() {
           <ul className="flex flex-col gap-3 text-sm">
             {companies.map((company) => (
               <li key={company.id}>
-                <a
-                  href={company.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href={`/societes/${company.slug}`}
                   className="text-gris transition-colors hover:text-creme"
                 >
                   {company.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
