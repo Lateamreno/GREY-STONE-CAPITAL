@@ -160,19 +160,19 @@ export default function CycleDiagram() {
           <filter id="gsc-blur-lg" x="-200%" y="-200%" width="400%" height="400%">
             <feGaussianBlur stdDeviation="9" />
           </filter>
-          {/* Modelé sphérique du noyau : lumière haut-gauche, fond profond */}
-          <radialGradient id="gsc-sphere" cx="34%" cy="28%" r="85%">
-            <stop offset="0%" stopColor="#241f1a" />
-            <stop offset="45%" stopColor="#131211" />
-            <stop offset="100%" stopColor="#0f0e0d" />
+          {/* Modelé sphérique du noyau : lumière haut-gauche, ombre bas-droit */}
+          <radialGradient id="gsc-sphere" cx="32%" cy="26%" r="90%">
+            <stop offset="0%" stopColor="#292319" />
+            <stop offset="40%" stopColor="#161412" />
+            <stop offset="75%" stopColor="#0e0d0c" />
+            <stop offset="100%" stopColor="#090808" />
           </radialGradient>
-          {/* Halo interne : intérieur noir, lueur concentrée sur le pourtour */}
+          {/* Très léger raccord lumineux au ras du bord interne */}
           <radialGradient id="gsc-core-glow" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="rgba(193,155,110,0)" />
-            <stop offset="62%" stopColor="rgba(193,155,110,0.02)" />
-            <stop offset="86%" stopColor="rgba(193,155,110,0.08)" />
-            <stop offset="96%" stopColor="rgba(193,155,110,0.18)" />
-            <stop offset="100%" stopColor="rgba(193,155,110,0.26)" />
+            <stop offset="88%" stopColor="rgba(193,155,110,0.015)" />
+            <stop offset="97%" stopColor="rgba(193,155,110,0.06)" />
+            <stop offset="100%" stopColor="rgba(193,155,110,0.1)" />
           </radialGradient>
         </defs>
 
@@ -259,29 +259,30 @@ export default function CycleDiagram() {
 
         {/* Halo et noyau — effet éclipse : couronne lumineuse asymétrique */}
         <circle cx="240" cy="240" r="130" fill="url(#gsc-glow)" />
+        {/* Couronne solaire : la lumière déborde vers l'extérieur */}
         <circle
           cx="240"
           cy="240"
-          r="80"
+          r="88"
           fill="none"
           stroke="#C19B6E"
-          strokeWidth="13"
-          opacity="0.22"
+          strokeWidth="15"
+          opacity="0.32"
           filter="url(#gsc-blur-lg)"
+        />
+        <circle
+          cx="240"
+          cy="240"
+          r="82"
+          fill="none"
+          stroke="#E6D4BD"
+          strokeWidth="3"
+          opacity="0.55"
+          filter="url(#gsc-blur)"
         />
         <circle cx="240" cy="240" r="76" fill="url(#gsc-sphere)" />
         <circle cx="240" cy="240" r="76" fill="url(#gsc-core-glow)" />
-        {/* Contour crème complet, fixe : lueur floutée + liseré net */}
-        <circle
-          cx="240"
-          cy="240"
-          r="78"
-          fill="none"
-          stroke="#E6D4BD"
-          strokeWidth="2.4"
-          opacity="0.75"
-          filter="url(#gsc-blur)"
-        />
+        {/* Liseré net */}
         <circle
           cx="240"
           cy="240"
