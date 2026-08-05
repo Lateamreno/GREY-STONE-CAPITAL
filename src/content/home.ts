@@ -24,8 +24,6 @@ export const home = {
   systeme: {
     kicker: "Le système",
     title: "Un cycle qui s'entretient, des synergies organisées.",
-    pullQuote:
-      "Grey Stone Capital prend des participations et crée des sociétés immobilières innovantes, créatrices de valeur pour les détenteurs d'actifs.",
     paragraphs: [
       "Un immeuble de rapport ne se vend pas comme un appartement ; il ne se réhabilite pas comme une maison ; il ne se cherche pas sur les portails grand public. Chaque geste demande une spécialité — et chaque société du groupe en porte une.",
       "Conseiller une cession, valoriser un immeuble, le découper en lots, le diffuser auprès des investisseurs : chaque société porte un savoir-faire — et chacune peut servir les clients de toutes les autres. Un immeuble conseillé trouve son chantier ; un immeuble valorisé trouve ses lots, ses locataires ou ses investisseurs ; le produit d'une cession se réinvestit dans le suivant.",

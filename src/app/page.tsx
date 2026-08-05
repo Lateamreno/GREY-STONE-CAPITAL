@@ -122,12 +122,6 @@ export default function HomePage() {
             {home.systeme.title}
           </h2>
 
-          <blockquote className="mt-12 max-w-3xl border-l-2 border-bronze pl-6 sm:pl-8">
-            <p className="font-display text-xl font-bold leading-relaxed text-bronze-clair sm:text-2xl">
-              « {home.systeme.pullQuote} »
-            </p>
-          </blockquote>
-
           <div className="mt-14 grid items-center gap-16 lg:grid-cols-2">
             <div className="flex flex-col gap-6">
               {home.systeme.paragraphs.map((paragraph) => (
