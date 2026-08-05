@@ -27,20 +27,23 @@ function ellipsePath(rx: number, ry: number) {
 }
 
 /**
- * Trois ellipses principales fines (trait plein) en étoile : deux
- * diagonales — pointes sur les médaillons — et une verticale libre.
+ * Quatre ellipses principales en trait plein, proportions généreuses
+ * (~2,5:1, elles épousent le noyau) : deux diagonales — pointes sur les
+ * médaillons — plus une horizontale et une verticale libres. Rosette
+ * régulière à quarante-cinq degrés.
  */
 const MAIN_ELLIPSES = [
-  { rx: RX, ry: 46, angle: 45, dotted: false, starDur: "4.5s", starBegin: "0s" },
-  { rx: RX, ry: 46, angle: 135, dotted: false, starDur: "6s", starBegin: "-2.5s" },
-  // Ellipse principale libre — verticale, reliée à rien
-  { rx: RX, ry: 46, angle: 90, dotted: false, starDur: "5s", starBegin: "-1.5s" },
+  { rx: RX, ry: 70, angle: 45, dotted: false, starDur: 4.5, starBegin: 0 },
+  { rx: RX, ry: 70, angle: 135, dotted: false, starDur: 6, starBegin: -2.5 },
+  // Ellipses principales libres — reliées à rien
+  { rx: RX, ry: 70, angle: 0, dotted: false, starDur: 5, starBegin: -1.5 },
+  { rx: RX, ry: 70, angle: 90, dotted: false, starDur: 5.5, starBegin: -3.5 },
 ];
 
-/** Deux ellipses pointillées plus larges : le X décoratif, solidaire du bloc */
+/** Deux ellipses pointillées nettement plus larges : le X décoratif */
 const DOTTED_ELLIPSES = [
-  { rx: RX, ry: 95, angle: 45, dotted: true, starDur: "9s", starBegin: "-3s" },
-  { rx: RX, ry: 95, angle: 135, dotted: true, starDur: "11s", starBegin: "-6s" },
+  { rx: RX, ry: 105, angle: 45, dotted: true, starDur: 9, starBegin: -3 },
+  { rx: RX, ry: 105, angle: 135, dotted: true, starDur: 11, starBegin: -6 },
 ];
 
 /**
@@ -164,18 +167,28 @@ export default function CycleDiagram() {
                 ry={ellipse.ry}
                 fill="none"
                 stroke="#C19B6E"
-                strokeWidth={ellipse.dotted ? 1.2 : 0.8}
+                strokeWidth={ellipse.dotted ? 1.3 : 0.9}
                 strokeDasharray={ellipse.dotted ? "0.1 8" : undefined}
                 strokeLinecap="round"
-                opacity={ellipse.dotted ? 0.4 : 0.48}
+                opacity={ellipse.dotted ? 0.42 : 0.5}
               />
               <Star
                 rx={ellipse.rx}
                 ry={ellipse.ry}
-                dur={ellipse.starDur}
-                begin={ellipse.starBegin}
+                dur={`${ellipse.starDur}s`}
+                begin={`${ellipse.starBegin}s`}
                 pulsed={!ellipse.dotted}
               />
+              {/* Seconde étoile à l'opposé sur les ellipses pleines */}
+              {!ellipse.dotted && (
+                <Star
+                  rx={ellipse.rx}
+                  ry={ellipse.ry}
+                  dur={`${ellipse.starDur}s`}
+                  begin={`${ellipse.starBegin - ellipse.starDur / 2}s`}
+                  pulsed
+                />
+              )}
             </g>
           ))}
         </g>
