@@ -16,8 +16,8 @@ import { CompanyGlyph } from "@/components/icons";
 /** Étoile à quatre branches */
 const STAR_PATH = "M0 -4.2 L1.1 -1.1 L4.2 0 L1.1 1.1 L0 4.2 L-1.1 1.1 L-4.2 0 L-1.1 -1.1 Z";
 
-/** Décalage des médaillons : 26 % du viewBox (positions 24 % / 76 %) */
-const NODE_OFFSET = 0.26 * 480;
+/** Décalage des médaillons : 33 % du viewBox (positions 17 % / 83 %) */
+const NODE_OFFSET = 0.33 * 480;
 /** Demi grand axe des ellipses en diagonale : pointes sur les médaillons */
 const RX = Math.round(NODE_OFFSET * Math.SQRT2 * 10) / 10;
 
@@ -137,10 +137,10 @@ function Star({
 
 export default function CycleDiagram() {
   const nodes = [
-    { company: companyById("france-immeuble"), position: "left-[24%] top-[24%]" },
-    { company: companyById("team-reno"), position: "left-[76%] top-[24%]" },
-    { company: companyById("pleinbail"), position: "left-[24%] top-[76%]" },
-    { company: companyById("fi-division"), position: "left-[76%] top-[76%]" },
+    { company: companyById("france-immeuble"), position: "left-[17%] top-[17%]" },
+    { company: companyById("team-reno"), position: "left-[83%] top-[17%]" },
+    { company: companyById("pleinbail"), position: "left-[17%] top-[83%]" },
+    { company: companyById("fi-division"), position: "left-[83%] top-[83%]" },
   ].filter((node) => node.company !== undefined);
 
   return (
