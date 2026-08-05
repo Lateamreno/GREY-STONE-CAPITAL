@@ -166,12 +166,13 @@ export default function CycleDiagram() {
             <stop offset="45%" stopColor="#131211" />
             <stop offset="100%" stopColor="#0f0e0d" />
           </radialGradient>
-          {/* Halo interne : la lueur remplit tout le disque, plus forte au bord */}
+          {/* Halo interne : intérieur noir, lueur concentrée sur le pourtour */}
           <radialGradient id="gsc-core-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="rgba(193,155,110,0.07)" />
-            <stop offset="55%" stopColor="rgba(193,155,110,0.10)" />
-            <stop offset="82%" stopColor="rgba(193,155,110,0.17)" />
-            <stop offset="100%" stopColor="rgba(193,155,110,0.30)" />
+            <stop offset="0%" stopColor="rgba(193,155,110,0)" />
+            <stop offset="62%" stopColor="rgba(193,155,110,0.02)" />
+            <stop offset="86%" stopColor="rgba(193,155,110,0.08)" />
+            <stop offset="96%" stopColor="rgba(193,155,110,0.18)" />
+            <stop offset="100%" stopColor="rgba(193,155,110,0.26)" />
           </radialGradient>
         </defs>
 
@@ -270,46 +271,26 @@ export default function CycleDiagram() {
         />
         <circle cx="240" cy="240" r="76" fill="url(#gsc-sphere)" />
         <circle cx="240" cy="240" r="76" fill="url(#gsc-core-glow)" />
-        <g className="gsc-spin-core" style={{ transformOrigin: "240px 240px" }}>
-          {/* Arc chaud principal (crème) */}
-          <circle
-            cx="240"
-            cy="240"
-            r="78"
-            fill="none"
-            stroke="#E6D4BD"
-            strokeWidth="2.6"
-            strokeLinecap="round"
-            strokeDasharray="300 191"
-            opacity="0.9"
-            filter="url(#gsc-blur)"
-            transform="rotate(-35 240 240)"
-          />
-          {/* Arc secondaire (bronze), en opposition */}
-          <circle
-            cx="240"
-            cy="240"
-            r="78"
-            fill="none"
-            stroke="#C19B6E"
-            strokeWidth="1.4"
-            strokeLinecap="round"
-            strokeDasharray="150 341"
-            opacity="0.85"
-            filter="url(#gsc-blur)"
-            transform="rotate(120 240 240)"
-          />
-          {/* Liseré net */}
-          <circle
-            cx="240"
-            cy="240"
-            r="78"
-            fill="none"
-            stroke="#E6D4BD"
-            strokeWidth="0.7"
-            opacity="0.45"
-          />
-        </g>
+        {/* Contour crème complet, fixe : lueur floutée + liseré net */}
+        <circle
+          cx="240"
+          cy="240"
+          r="78"
+          fill="none"
+          stroke="#E6D4BD"
+          strokeWidth="2.4"
+          opacity="0.75"
+          filter="url(#gsc-blur)"
+        />
+        <circle
+          cx="240"
+          cy="240"
+          r="78"
+          fill="none"
+          stroke="#E6D4BD"
+          strokeWidth="0.9"
+          opacity="0.9"
+        />
       </svg>
 
       {/* Noyau — holding */}
@@ -331,7 +312,7 @@ export default function CycleDiagram() {
           <Link
             key={company!.id}
             href={`/societes/${company!.slug}`}
-            className={`group pointer-events-auto absolute ${position} h-[5rem] w-[5rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-bronze/50 bg-[radial-gradient(circle_at_32%_26%,#211d18,#0f0e0d_72%)] shadow-[inset_0_-8px_18px_rgba(193,155,110,0.16),inset_0_6px_12px_rgba(0,0,0,0.55),0_0_30px_rgba(193,155,110,0.22),0_18px_45px_rgba(0,0,0,0.6)] transition-[border-color,box-shadow] duration-300 hover:border-bronze-clair hover:shadow-[inset_0_-8px_18px_rgba(193,155,110,0.24),inset_0_6px_12px_rgba(0,0,0,0.55),0_0_50px_rgba(193,155,110,0.35),0_18px_45px_rgba(0,0,0,0.6)] sm:h-28 sm:w-28`}
+            className={`group pointer-events-auto absolute ${position} h-[5rem] w-[5rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-bronze/50 bg-[radial-gradient(circle_at_32%_26%,#1a1714,#0a0908_72%)] shadow-[inset_0_-8px_18px_rgba(193,155,110,0.12),inset_0_6px_12px_rgba(0,0,0,0.55),0_0_30px_rgba(193,155,110,0.22),0_18px_45px_rgba(0,0,0,0.6)] transition-[border-color,box-shadow] duration-300 hover:border-bronze-clair hover:shadow-[inset_0_-8px_18px_rgba(193,155,110,0.24),inset_0_6px_12px_rgba(0,0,0,0.55),0_0_50px_rgba(193,155,110,0.35),0_18px_45px_rgba(0,0,0,0.6)] sm:h-28 sm:w-28`}
           >
             <span className="gsc-orbit-rev flex h-full w-full flex-col items-center justify-center gap-0.5 rounded-full px-2.5 text-center sm:gap-1 sm:px-4">
               <CompanyGlyph

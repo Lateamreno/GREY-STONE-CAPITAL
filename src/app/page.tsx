@@ -26,18 +26,18 @@ export default function HomePage() {
         {/* Photo d'immeubles haussmanniens, traitement sombre charte */}
         <Image
           src="/images/hero-immeubles.jpg"
-          alt="Toits et façades d'immeubles haussmanniens à Paris"
+          alt="Façades haussmanniennes à l'heure dorée, Paris"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[65%_35%] opacity-50 brightness-[0.55] saturate-[0.65] sepia-[0.25]"
+          className="object-cover object-[70%_45%] opacity-70 brightness-[0.75] saturate-[0.95]"
         />
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "linear-gradient(to right, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.75) 45%, rgba(10,10,10,0.35) 100%)",
+              "linear-gradient(to right, rgba(10,10,10,0.94) 0%, rgba(10,10,10,0.7) 45%, rgba(10,10,10,0.22) 100%)",
           }}
         />
         <div
