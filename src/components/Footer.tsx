@@ -34,11 +34,6 @@ export default function Footer() {
                 Participations
               </Link>
             </li>
-            <li>
-              <Link href="/contact" className="text-gris transition-colors hover:text-creme">
-                Contact
-              </Link>
-            </li>
           </ul>
         </div>
 

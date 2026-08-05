@@ -1,13 +1,8 @@
 import Link from "next/link";
 
-const navItems = [
-  { href: "/groupe", label: "Le groupe" },
-  { href: "/participations", label: "Participations" },
-];
-
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-ligne bg-noir/90 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-ligne bg-noir/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
         <Link href="/" className="group flex items-center gap-3">
           <span
@@ -19,21 +14,18 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="hidden text-sm text-gris transition-colors hover:text-creme sm:block"
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav className="flex items-center gap-4 sm:gap-8">
           <Link
-            href="/contact"
-            className="rounded-full border border-bronze px-5 py-2 text-sm font-medium text-bronze transition-colors hover:border-bronze-clair hover:text-bronze-clair"
+            href="/groupe"
+            className="text-sm text-gris transition-colors hover:text-creme"
           >
-            Contact
+            Le groupe
+          </Link>
+          <Link
+            href="/participations"
+            className="rounded-full border border-bronze/60 px-5 py-2 text-sm font-medium text-bronze transition-colors hover:border-bronze-clair hover:text-bronze-clair"
+          >
+            Participations
           </Link>
         </nav>
       </div>
