@@ -3,22 +3,19 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Mentions légales",
   description: "Mentions légales du site Grey Stone Capital.",
-  robots: { index: false },
 };
 
 /**
- * ⚠️ Emplacements à compléter avec les informations du propriétaire
- * (raison sociale exacte, siège, email) avant mise en production.
+ * Seule page du site autorisée à porter des chiffres (identifiants
+ * légaux obligatoires) — exception actée au « zéro chiffre » de la charte.
  */
-const A_COMPLETER = "[à compléter]";
-
 const sections = [
   {
     title: "Éditeur du site",
     lines: [
-      `Le présent site est édité par ${A_COMPLETER} (Grey Stone Capital), société dont le siège social est situé ${A_COMPLETER}.`,
-      `Directeur de la publication : ${A_COMPLETER}.`,
-      `Contact : ${A_COMPLETER}.`,
+      "Le présent site est édité par GREY STONE CAPITAL, société au capital social de 100 €, dont le siège social est situé 66 avenue des Champs-Élysées, 75008 Paris, France, immatriculée sous le numéro 952 623 320.",
+      "Directeur de la publication : Marc-Antoine Voci, Président.",
+      "Contact : par courrier au siège social.",
     ],
   },
   {

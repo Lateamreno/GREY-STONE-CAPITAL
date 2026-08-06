@@ -168,7 +168,9 @@ preview Vercel.
 - Aucun pourcentage de détention, aucun chiffre capitalistique
 - ZÉRO CHIFFRE sur tout le site (pas de bande de stats, pas de « 365
   immeubles », pas de volumes, pas de CA) : sobriété totale, la
-  crédibilité passe par le verbe et la précision, jamais par les nombres
+  crédibilité passe par le verbe et la précision, jamais par les nombres.
+  SEULE EXCEPTION : la page /mentions-legales (identifiants légaux
+  obligatoires — capital, adresse, immatriculation)
 - Pas de mention de sociétés/projets non validés (pas de Hopelia, pas de
   conciergerie, pas de menuiseries). La découpe (France Immeuble Division)
   est une fiche société à part entière (décision propriétaire, à terme
