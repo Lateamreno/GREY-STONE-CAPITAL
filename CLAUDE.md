@@ -105,7 +105,9 @@ Une seule couleur d'accent. Relief par dégradés monochromes + ombres.
 - Display : **Archivo** 700/800 · Body : **Inter** 400/500/600 ·
   Mono (kickers, chiffres) : **JetBrains Mono** 400/500
 - ⚠️ PAS de `next/font/google` (échecs de build Vercel constatés).
-  Charger via `<link>` Google Fonts dans le layout, `font-display: swap`.
+  Polices AUTO-HÉBERGÉES via `next/font/local` (fichiers woff2 variables
+  committés dans `src/fonts/`, `font-display: swap`) : aucune requête
+  réseau au build ni au chargement — décision M4 (performance).
 
 ### Style
 - Fond sombre, boutons pilule (radius 999px), filet vertical bronze en

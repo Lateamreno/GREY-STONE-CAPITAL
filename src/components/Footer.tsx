@@ -69,7 +69,12 @@ export default function Footer() {
       <div className="border-t border-ligne">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-6 text-xs text-gris sm:flex-row sm:items-center sm:justify-between">
           <p>Grey Stone Capital — Tous droits réservés.</p>
-          <p>Holding patrimoniale à dominante immobilière.</p>
+          <Link
+            href="/mentions-legales"
+            className="transition-colors hover:text-creme"
+          >
+            Mentions légales
+          </Link>
         </div>
       </div>
     </footer>

@@ -29,6 +29,7 @@ export default function HomePage() {
           alt="Tours de verre en contre-plongée, atrium doré illuminé"
           fill
           priority
+          quality={70}
           sizes="100vw"
           className="object-cover object-[60%_72%] opacity-65 brightness-[0.72] saturate-[0.9] sepia-[0.12]"
         />
@@ -155,6 +156,7 @@ export default function HomePage() {
               src="/images/equipe-travail.jpg"
               alt="Équipe au travail autour d'une table, sur ordinateurs"
               fill
+              quality={70}
               sizes="(min-width: 1152px) 1104px, 100vw"
               className="object-cover object-center brightness-[0.65] saturate-[0.75] sepia-[0.15]"
             />
