@@ -27,7 +27,7 @@ const jetbrainsMono = localFont({
   display: "swap",
 });
 
-const SITE_URL = "https://greystonecapital.fr";
+const SITE_URL = "https://www.greystonecapital.fr";
 const DESCRIPTION =
   "Grey Stone Capital prend des participations et crée des sociétés immobilières innovantes, créatrices de valeur pour les détenteurs d'actifs.";
 
@@ -38,6 +38,8 @@ export const metadata: Metadata = {
     template: "%s — Grey Stone Capital",
   },
   description: DESCRIPTION,
+  // URL canonique par page : Google indexe l'adresse en www
+  alternates: { canonical: "./" },
   openGraph: {
     type: "website",
     locale: "fr_FR",

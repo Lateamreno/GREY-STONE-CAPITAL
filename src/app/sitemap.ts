@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { companies } from "@/config/companies";
 
-const BASE_URL = "https://greystonecapital.fr";
+const BASE_URL = "https://www.greystonecapital.fr";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
