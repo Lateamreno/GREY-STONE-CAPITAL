@@ -21,8 +21,8 @@ const opererIcons = {
 export default function HomePage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-ligne">
+      {/* Hero — pleine hauteur d'écran, contenu centré sous le header flottant */}
+      <section className="relative flex min-h-svh items-center overflow-hidden border-b border-ligne pt-24">
         {/* Photo de tours de verre (innovation immobilière), traitement sombre charte */}
         <Image
           src="/images/hero-tours.jpg"
@@ -49,7 +49,7 @@ export default function HomePage() {
               "linear-gradient(to bottom, rgba(10,10,10,0.4) 0%, transparent 30%, transparent 60%, rgba(10,10,10,0.9) 100%), radial-gradient(ellipse 80% 60% at 30% 0%, rgba(193,155,110,0.08), transparent 60%)",
           }}
         />
-        <div className="relative mx-auto max-w-6xl px-6 pb-24 pt-24 sm:pb-32 sm:pt-36">
+        <div className="relative mx-auto w-full max-w-6xl px-6 py-16">
           <p className="mb-8 font-mono text-xs uppercase tracking-[0.3em] text-bronze">
             {home.hero.kicker}
           </p>

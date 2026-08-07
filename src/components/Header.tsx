@@ -1,17 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { companies } from "@/config/companies";
 import { IconChevron } from "@/components/icons";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  /** Fond transparent tant qu'on n'a pas scrollé (le hero passe dessous) */
+  const [scrolled, setScrolled] = useState(false);
 
   const close = () => setOpen(false);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const solid = scrolled || open;
+
   return (
-    <header className="sticky top-0 z-50 border-b border-ligne bg-noir/85 backdrop-blur-md">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
+        solid
+          ? "border-ligne bg-noir/85 backdrop-blur-md"
+          : "border-transparent bg-transparent"
+      }`}
+    >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
         <Link href="/" onClick={close} className="group flex items-center gap-3">
           <span
